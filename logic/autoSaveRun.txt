@@ -1,0 +1,73 @@
+package logic;
+
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class autoSaveRun extends Thread {
+
+    private int time = 0;
+    private byte parameter = 0;
+
+    public autoSaveRun(int time, byte parameter) {
+        this.time = time;
+        this.parameter = parameter;
+    }
+
+    @Override
+    public void run() {
+        switch (parameter) {
+            case 0:/*CTRL + S*/
+                System.out.println("CTRL + S");
+                while (Static.startEngine) {
+                    CS();
+                }
+                break;
+            case 1:/*CTRL + G*/
+                System.out.println("CTRL + G");
+                while (Static.startEngine) {
+                    CG();
+                }
+                break;
+            default:
+                throw new AssertionError();
+        }
+    }
+
+    private void CS() {
+        try {
+            Robot robot = new Robot();
+            robot.keyPress(KeyEvent.VK_CONTROL);
+            robot.keyPress(KeyEvent.VK_S);
+            robot.keyRelease(KeyEvent.VK_S);
+            robot.keyRelease(KeyEvent.VK_CONTROL);
+            Static.run.savedMe();
+            System.out.println("Saved. CTRL + S");
+            Thread.sleep(time);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(autoSaveRun.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (AWTException ex) {
+            Logger.getLogger(autoSaveRun.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void CG() {
+        try {
+            Robot robot = new Robot();
+            robot.keyPress(KeyEvent.VK_CONTROL);
+            robot.keyPress(KeyEvent.VK_G);
+            robot.keyRelease(KeyEvent.VK_G);
+            robot.keyRelease(KeyEvent.VK_CONTROL);
+            Static.run.savedMe();
+            System.out.println("Saved. CTRL + G");
+            Thread.sleep(time);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(autoSaveRun.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (AWTException ex) {
+            Logger.getLogger(autoSaveRun.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+}
