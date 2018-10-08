@@ -430,7 +430,7 @@ public class Frame extends javax.swing.JFrame {
     private void GithubMouseClicked(java.awt.event.MouseEvent evt) {                                    
         if (Desktop.isDesktopSupported()) {
             try {
-                Desktop.getDesktop().browse(new URI("https://github.com/JustVice/AutoSave"));
+                Desktop.getDesktop().browse(new URI("https://github.com/JustVice?tab=repositories"));
             } catch (IOException | URISyntaxException ex) {
                 Logger.getLogger(Frame.class.getName()).log(Level.SEVERE, null, ex);
             }
