@@ -11,6 +11,8 @@ import javax.swing.JOptionPane;
 
 public class Frame extends javax.swing.JFrame {
 
+    autoSaveRun autoSaveThread;
+
     public Frame() {
         initComponents();
         setLocationRelativeTo(null);
@@ -60,14 +62,14 @@ public class Frame extends javax.swing.JFrame {
         } else {
             Static.data.getUserData().setSavePrefix("G");
         }
-        Static.data.getUserData().setSec(textsec.getText());
-        Static.data.getUserData().setMin(textmin.getText());
         if (combosaved.isSelected()) {
             Static.data.getUserData().setShowSavedMessage(true);
         } else {
             Static.data.getUserData().setShowSavedMessage(false);
         }
         Static.data.updateInfo();
+        Static.data.getUserData().setSec(textsec.getText());
+        Static.data.getUserData().setMin(textmin.getText());
     }
 
     @SuppressWarnings("unchecked")
@@ -123,6 +125,11 @@ public class Frame extends javax.swing.JFrame {
         });
 
         textmin.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        textmin.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                textminFocusLost(evt);
+            }
+        });
         textmin.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 textminKeyTyped(evt);
@@ -132,6 +139,11 @@ public class Frame extends javax.swing.JFrame {
         jLabel2.setText("MINUTES");
 
         textsec.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        textsec.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                textsecFocusLost(evt);
+            }
+        });
         textsec.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 textsecKeyTyped(evt);
@@ -267,13 +279,6 @@ public class Frame extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel3)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addGap(8, 8, 8)
-                            .addComponent(jLabel4)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jLabel5)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -281,7 +286,15 @@ public class Frame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Github, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(alllinks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(alllinks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel5)))))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -321,12 +334,13 @@ public class Frame extends javax.swing.JFrame {
     private void startActionPerformed(java.awt.event.ActionEvent evt) {                                      
         startWorking();
     }                                     
+
     private void startWorking() {
         try {
             if (isTimeTyped()) {
                 int undertime = 0;
-                int time = Static.run.timeConverter(textsec.getText(), textmin.getText());
-                if (time <= 10000) {
+                Static.timeStatic = Static.run.timeConverter(textsec.getText(), textmin.getText());
+                if (Static.timeStatic <= 10000) {
                     undertime = JOptionPane.showConfirmDialog(null, "You are setting an under/equals 10 seconds timelapse to perform a CTRL + S/G"
                             + "\nThere will be a continuos spam of CTRL + S/G. It is recomended to set 2 minutes.\n"
                             + "Do you want to continue?");
@@ -336,16 +350,27 @@ public class Frame extends javax.swing.JFrame {
                     if (combog.isSelected()) {
                         option = (byte) 1;
                     }
-                    Static.startEngine = true;
-                    autoSaveRun a = new autoSaveRun(time, option);
-                    a.start();
+                    autoSaveThread = new autoSaveRun();
                     stop.setEnabled(true);
-                    unableAll();
+                    start.setEnabled(false);
+                    saveUserSettings();
                 }
             }
 
         } catch (Exception e) {
         }
+    }
+
+    private void timeChanged() {
+        try {
+            if (Integer.parseInt(textsec.getText()) < 2 && textmin.getText().equals("0")) {
+                textsec.setText("10");
+            }
+            Static.timeStatic = Static.run.timeConverter(textsec.getText(), textmin.getText());
+        } catch (Exception e) {
+            System.out.println("Error en timeChanged");
+        }
+
     }
 
     private boolean isTimeTyped() {
@@ -375,17 +400,9 @@ public class Frame extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, message, title, 0);
     }
 
-    private void unableAll() {
-        combog.setEnabled(false);
-        combos.setEnabled(false);
-        combosaved.setEnabled(false);
-        start.setEnabled(false);
-        textsec.setEnabled(false);
-        textmin.setEnabled(false);
-    }
-
     private void stopActionPerformed(java.awt.event.ActionEvent evt) {                                     
-        System.exit(0);
+        autoSaveThread.interrupt();
+
     }                                    
 
     private void textsecKeyTyped(java.awt.event.KeyEvent evt) {                                 
@@ -407,6 +424,7 @@ public class Frame extends javax.swing.JFrame {
         if (c == KeyEvent.VK_0 && textsec.getText().length() == 4) {
             textsec.setText("0");
         }
+        timeChanged();
         saveUserSettings();
     }                                
 
@@ -428,10 +446,12 @@ public class Frame extends javax.swing.JFrame {
         if (c == KeyEvent.VK_0 && textmin.getText().length() == 4) {
             textmin.setText("0");
         }
+        timeChanged();
         saveUserSettings();
     }                                
 
     private void combosActionPerformed(java.awt.event.ActionEvent evt) {                                       
+        Static.parameterStatic = 0;
         saveUserSettings();
     }                                      
 
@@ -446,6 +466,7 @@ public class Frame extends javax.swing.JFrame {
     }                                          
 
     private void combogActionPerformed(java.awt.event.ActionEvent evt) {                                       
+        Static.parameterStatic = 1;
         saveUserSettings();
     }                                      
 
@@ -478,6 +499,14 @@ public class Frame extends javax.swing.JFrame {
             }
         }
     }                                     
+
+    private void textsecFocusLost(java.awt.event.FocusEvent evt) {                                  
+        saveUserSettings();
+    }                                 
+
+    private void textminFocusLost(java.awt.event.FocusEvent evt) {                                  
+        saveUserSettings();
+    }                                 
 
 
     // Variables declaration - do not modify                     

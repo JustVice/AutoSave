@@ -8,32 +8,30 @@ import java.util.logging.Logger;
 
 public class autoSaveRun extends Thread {
 
-    private int time = 0;
-    private byte parameter = 0;
+    private boolean stillRunning = true;
 
-    public autoSaveRun(int time, byte parameter) {
-        this.time = time;
-        this.parameter = parameter;
+    public autoSaveRun() {
+        Thread f = new Thread(this);
+        f.start();
     }
 
     @Override
     public void run() {
-        switch (parameter) {
-            case 0:/*CTRL + S*/
-                System.out.println("CTRL + S");
-                while (Static.startEngine) {
+        while (stillRunning) {
+            switch (Static.parameterStatic) {
+                case 0:/*CTRL + S*/
+                    System.out.println("CTRL + S");
                     CS();
-                }
-                break;
-            case 1:/*CTRL + G*/
-                System.out.println("CTRL + G");
-                while (Static.startEngine) {
+                    break;
+                case 1:/*CTRL + G*/
+                    System.out.println("CTRL + G");
                     CG();
-                }
-                break;
-            default:
-                throw new AssertionError();
+                    break;
+                default:
+                    throw new AssertionError();
+            }
         }
+        System.out.println("Thread stopped");
     }
 
     private void CS() {
@@ -45,7 +43,7 @@ public class autoSaveRun extends Thread {
             robot.keyRelease(KeyEvent.VK_CONTROL);
             Static.run.savedMe();
             System.out.println("Saved. CTRL + S");
-            Thread.sleep(time);
+            Thread.sleep(Static.timeStatic);
         } catch (InterruptedException ex) {
             Logger.getLogger(autoSaveRun.class.getName()).log(Level.SEVERE, null, ex);
         } catch (AWTException ex) {
@@ -62,12 +60,20 @@ public class autoSaveRun extends Thread {
             robot.keyRelease(KeyEvent.VK_CONTROL);
             Static.run.savedMe();
             System.out.println("Saved. CTRL + G");
-            Thread.sleep(time);
+            Thread.sleep(Static.timeStatic);
         } catch (InterruptedException ex) {
             Logger.getLogger(autoSaveRun.class.getName()).log(Level.SEVERE, null, ex);
         } catch (AWTException ex) {
             Logger.getLogger(autoSaveRun.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public boolean isStillRunning() {
+        return stillRunning;
+    }
+
+    public void setStillRunning(boolean stillRunning) {
+        this.stillRunning = stillRunning;
     }
 
 }
