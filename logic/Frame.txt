@@ -321,37 +321,54 @@ public class Frame extends javax.swing.JFrame {
     private void startActionPerformed(java.awt.event.ActionEvent evt) {                                      
         startWorking();
     }                                     
-
     private void startWorking() {
-        if (isTimeTyped()) {
-            int undertime = 0;
-            int time = Static.run.timeConverter(textsec.getText(), textmin.getText());
-            if (time <= 10000) {
-                undertime = JOptionPane.showConfirmDialog(null, "You are setting an under/equals 10 seconds timelapse to perform a CTRL + S/G"
-                        + "\nThere will be a continuos spam of CTRL + S/G. It is recomended to set 2 minutes.\n"
-                        + "Do you want to continue?");
-            }
-            if (undertime == 0) {
-                byte option = 0;
-                if (combog.isSelected()) {
-                    option = (byte) 1;
+        try {
+            if (isTimeTyped()) {
+                int undertime = 0;
+                int time = Static.run.timeConverter(textsec.getText(), textmin.getText());
+                if (time <= 10000) {
+                    undertime = JOptionPane.showConfirmDialog(null, "You are setting an under/equals 10 seconds timelapse to perform a CTRL + S/G"
+                            + "\nThere will be a continuos spam of CTRL + S/G. It is recomended to set 2 minutes.\n"
+                            + "Do you want to continue?");
                 }
-                Static.startEngine = true;
-                autoSaveRun a = new autoSaveRun(time, option);
-                a.start();
-                stop.setEnabled(true);
-                unableAll();
+                if (undertime == 0) {
+                    byte option = 0;
+                    if (combog.isSelected()) {
+                        option = (byte) 1;
+                    }
+                    Static.startEngine = true;
+                    autoSaveRun a = new autoSaveRun(time, option);
+                    a.start();
+                    stop.setEnabled(true);
+                    unableAll();
+                }
             }
+
+        } catch (Exception e) {
         }
     }
 
     private boolean isTimeTyped() {
         if (textsec.getText().equals("0") && textmin.getText().equals("0")) {
+            setTextFieldsToCero();
             errorMessage("NO TIME", "You must provide a time to perform hotkeys.");
             return false;
         } else {
-            return true;
+            try {
+                int n1 = Integer.parseInt(textsec.getText());
+                int n2 = Integer.parseInt(textmin.getText());
+                return true;
+            } catch (Exception e) {
+                setTextFieldsToCero();
+                errorMessage("NO TIME", "You must provide a time to perform hotkeys.");
+                return false;
+            }
         }
+    }
+
+    private void setTextFieldsToCero() {
+        textsec.setText("0");
+        textmin.setText("0");
     }
 
     private void errorMessage(String title, String message) {
@@ -373,28 +390,43 @@ public class Frame extends javax.swing.JFrame {
 
     private void textsecKeyTyped(java.awt.event.KeyEvent evt) {                                 
         char c = evt.getKeyChar();
-        if (!(Character.isDigit(c)) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE || textsec.getText().length() == 9) {
+        if (!(Character.isDigit(c)) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE || textsec.getText().length() == 4) {
             evt.consume();
+        }
+        if (textsec.getText().equals("0") && Character.isDigit(c)) {
+            evt.consume();
+            textsec.setText("" + c);
         }
         if (textsec.getText().equals("")) {
             textsec.setText("0");
         }
+
         if (c == KeyEvent.VK_ENTER) {
             startWorking();
+        }
+        if (c == KeyEvent.VK_0 && textsec.getText().length() == 4) {
+            textsec.setText("0");
         }
         saveUserSettings();
     }                                
 
     private void textminKeyTyped(java.awt.event.KeyEvent evt) {                                 
         char c = evt.getKeyChar();
-        if (!(Character.isDigit(c)) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE || textmin.getText().length() == 9) {
+        if (!(Character.isDigit(c)) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE || textmin.getText().length() == 4) {
             evt.consume();
+        }
+        if (textmin.getText().equals("0") && Character.isDigit(c)) {
+            evt.consume();
+            textmin.setText("" + c);
         }
         if (textmin.getText().equals("")) {
             textmin.setText("0");
         }
         if (c == KeyEvent.VK_ENTER) {
             startWorking();
+        }
+        if (c == KeyEvent.VK_0 && textmin.getText().length() == 4) {
+            textmin.setText("0");
         }
         saveUserSettings();
     }                                
