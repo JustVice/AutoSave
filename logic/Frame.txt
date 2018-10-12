@@ -401,8 +401,7 @@ public class Frame extends javax.swing.JFrame {
     }
 
     private void stopActionPerformed(java.awt.event.ActionEvent evt) {                                     
-        autoSaveThread.interrupt();
-
+        System.exit(0);
     }                                    
 
     private void textsecKeyTyped(java.awt.event.KeyEvent evt) {                                 
