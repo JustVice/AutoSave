@@ -77,6 +77,7 @@ public class Data {
     private void dirFiles(String folderName) {
         String path = System.getenv("APPDATA") + "\\" + folderName;
         File file = new File(path);
+        System.out.println(path);
         if (!file.exists()) {
             boolean created = file.mkdir();
             if (created) {

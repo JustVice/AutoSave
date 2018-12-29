@@ -5,13 +5,14 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class Frame extends javax.swing.JFrame {
 
-    autoSaveRun autoSaveThread;
+    LinkedList<autoSaveRun> listaHilos = new LinkedList<autoSaveRun>();
 
     public Frame() {
         initComponents();
@@ -32,6 +33,7 @@ public class Frame extends javax.swing.JFrame {
             combosaved.setSelected(false);
         }
         stop.setEnabled(false);
+        setIconImage(Static.getIconImage());
     }
 
     private void userSettingsIO() {
@@ -101,7 +103,7 @@ public class Frame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         stop.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        stop.setText("Stop/Exit");
+        stop.setText("Stop");
         stop.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 stopActionPerformed(evt);
@@ -295,7 +297,7 @@ public class Frame extends javax.swing.JFrame {
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel5)))))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -305,7 +307,7 @@ public class Frame extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -350,7 +352,7 @@ public class Frame extends javax.swing.JFrame {
                     if (combog.isSelected()) {
                         option = (byte) 1;
                     }
-                    autoSaveThread = new autoSaveRun();
+                    listaHilos.add(new autoSaveRun());
                     stop.setEnabled(true);
                     start.setEnabled(false);
                     saveUserSettings();
@@ -401,7 +403,11 @@ public class Frame extends javax.swing.JFrame {
     }
 
     private void stopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopActionPerformed
-            System.exit(0);
+        for (autoSaveRun a : listaHilos) {
+            a.setStillRunning(false);
+        }
+        stop.setEnabled(false);
+        start.setEnabled(true);
     }//GEN-LAST:event_stopActionPerformed
 
     private void textsecKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textsecKeyTyped

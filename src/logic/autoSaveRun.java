@@ -9,8 +9,10 @@ import java.util.logging.Logger;
 public class autoSaveRun extends Thread {
 
     private boolean stillRunning = true;
+    private int ID;
 
     public autoSaveRun() {
+        this.ID = ((int)(Math.random()*100000));
         Thread f = new Thread(this);
         f.start();
     }
@@ -20,18 +22,16 @@ public class autoSaveRun extends Thread {
         while (stillRunning) {
             switch (Static.parameterStatic) {
                 case 0:/*CTRL + S*/
-                    System.out.println("CTRL + S");
                     CS();
                     break;
                 case 1:/*CTRL + G*/
-                    System.out.println("CTRL + G");
                     CG();
                     break;
                 default:
                     throw new AssertionError();
             }
         }
-        System.out.println("Thread stopped");
+        System.out.println("Thread "+ ID + " stopped");
     }
 
     private void CS() {
@@ -42,7 +42,7 @@ public class autoSaveRun extends Thread {
             robot.keyRelease(KeyEvent.VK_S);
             robot.keyRelease(KeyEvent.VK_CONTROL);
             Static.run.savedMe();
-            System.out.println("Saved. CTRL + S");
+            System.out.println("Saved. CTRL + S. Thread ID: " + ID);
             Thread.sleep(Static.timeStatic);
         } catch (InterruptedException ex) {
             Logger.getLogger(autoSaveRun.class.getName()).log(Level.SEVERE, null, ex);
@@ -59,7 +59,7 @@ public class autoSaveRun extends Thread {
             robot.keyRelease(KeyEvent.VK_G);
             robot.keyRelease(KeyEvent.VK_CONTROL);
             Static.run.savedMe();
-            System.out.println("Saved. CTRL + G");
+            System.out.println("Saved. CTRL + G. Thread ID: " + ID);
             Thread.sleep(Static.timeStatic);
         } catch (InterruptedException ex) {
             Logger.getLogger(autoSaveRun.class.getName()).log(Level.SEVERE, null, ex);
