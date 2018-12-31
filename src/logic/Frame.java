@@ -69,9 +69,9 @@ public class Frame extends javax.swing.JFrame {
         } else {
             Static.data.getUserData().setShowSavedMessage(false);
         }
-        Static.data.updateInfo();
         Static.data.getUserData().setSec(textsec.getText());
         Static.data.getUserData().setMin(textmin.getText());
+        Static.data.updateInfo();
     }
 
     @SuppressWarnings("unchecked")
