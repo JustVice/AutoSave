@@ -1,14 +1,15 @@
-package logic;
+package UI;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import logic.Static;
 
 public class saveMessage extends javax.swing.JFrame implements Runnable {
 
     private final int time;
 
     public saveMessage() {
-        this.time = Static.timeShowMessage;
+        this.time = Static.time_message_until_dispose;
         setUndecorated(true);
         initComponents();
         startT();

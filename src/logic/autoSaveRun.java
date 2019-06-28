@@ -6,21 +6,21 @@ import java.awt.event.KeyEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class autoSaveRun extends Thread {
+public class autoSaveRun implements Runnable {
 
-    private boolean stillRunning = true;
+    private boolean run = true;
     private int ID;
 
     public autoSaveRun() {
         this.ID = ((int)(Math.random()*100000));
-        Thread f = new Thread(this);
-        f.start();
+        Thread t = new Thread(this);
+        t.start();
     }
-
+    
     @Override
     public void run() {
-        while (stillRunning) {
-            switch (Static.parameterStatic) {
+        while (run) {
+            switch (Static.save_type_action) {
                 case 0:/*CTRL + S*/
                     CS();
                     break;
@@ -43,7 +43,7 @@ public class autoSaveRun extends Thread {
             robot.keyRelease(KeyEvent.VK_CONTROL);
             Static.run.savedMe();
             System.out.println("Saved. CTRL + S. Thread ID: " + ID);
-            Thread.sleep(Static.timeStatic);
+            Thread.sleep(Static.time_before_save);
         } catch (InterruptedException ex) {
             Logger.getLogger(autoSaveRun.class.getName()).log(Level.SEVERE, null, ex);
         } catch (AWTException ex) {
@@ -60,7 +60,7 @@ public class autoSaveRun extends Thread {
             robot.keyRelease(KeyEvent.VK_CONTROL);
             Static.run.savedMe();
             System.out.println("Saved. CTRL + G. Thread ID: " + ID);
-            Thread.sleep(Static.timeStatic);
+            Thread.sleep(Static.time_before_save);
         } catch (InterruptedException ex) {
             Logger.getLogger(autoSaveRun.class.getName()).log(Level.SEVERE, null, ex);
         } catch (AWTException ex) {
@@ -68,12 +68,12 @@ public class autoSaveRun extends Thread {
         }
     }
 
-    public boolean isStillRunning() {
-        return stillRunning;
+    public boolean isRun() {
+        return run;
     }
 
-    public void setStillRunning(boolean stillRunning) {
-        this.stillRunning = stillRunning;
+    public void setRun(boolean stillRunning) {
+        this.run = stillRunning;
     }
 
 }
