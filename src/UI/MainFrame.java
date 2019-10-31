@@ -1,8 +1,6 @@
 package UI;
 
-import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
-import javax.swing.SpinnerNumberModel;
 import logic.Static;
 import logic.autoSaveRun;
 
@@ -12,15 +10,12 @@ public class MainFrame extends javax.swing.JFrame {
 
     public MainFrame() {
         initComponents();
-        //User interfase initialization.
-        UIDisplay();
-        //Sets local settings.
-        settings();
-        //Sets user data settings;
-        userSettingsIO();
+        FRAME_SETTINGS();
+        UI_SETTINGS();
+        UI_SETTINGS_USERDATA();
     }
 
-    private void UIDisplay() {
+    private void FRAME_SETTINGS() {
         //Sets the frame at the center.
         this.setLocationRelativeTo(null);
         //Makes the frame visible.
@@ -31,32 +26,16 @@ public class MainFrame extends javax.swing.JFrame {
         setTitle(Static.title + " " + Static.version);
         //Sets the icon image.
         setIconImage(Static.getIconImage());
-        //Model that sets the settings of the jSpinners
-        SpinnerNumberModel spinner_model_minutes = new SpinnerNumberModel();
-        SpinnerNumberModel spinner_model_seconds = new SpinnerNumberModel();
-        //Sets the minimum value for the spinners
-        spinner_model_minutes.setMinimum(0);
-        spinner_model_seconds.setMinimum(0);
-        //Sets the maximum value for the spinners
-        spinner_model_minutes.setMaximum(60);
-        spinner_model_seconds.setMaximum(60);
-        //Sets the settings to minutes and seconds spinner
-        this.jSpinner_minutes.setModel(spinner_model_minutes);
-        this.jSpinner_seconds.setModel(spinner_model_seconds);
     }
 
-    private void settings() {
+    private void UI_SETTINGS() {
         //Sets combo CTRL + S enabled.
         jRadioButton_CTRL_and_S.setSelected(true);
-        //Sets jspinner of minutes to 0.
-        jSpinner_minutes.setValue(0);
-        //Sets jspinner of seconds to 0.
-        jSpinner_seconds.setValue(0);
         //Makes the "Stop" jbutton not able to be pressed.
         jButton_stop.setEnabled(false);
     }
 
-    private void userSettingsIO() {
+    private void UI_SETTINGS_USERDATA() {
         //If show_saved_message is true, the show saved alert will be selected
         //or not.
         if (Static.show_saved_message) {
@@ -88,10 +67,6 @@ public class MainFrame extends javax.swing.JFrame {
             jRadioButton_show_saved_alert.setSelected(false);
             Static.show_saved_message = false;
         }
-        //Sets the same sec or min at the spinners which is saved inside 
-        //the User Data parameters.
-        jSpinner_seconds.setValue(Integer.parseInt(Static.data.getUserData().getSec()));
-        jSpinner_minutes.setValue(Integer.parseInt(Static.data.getUserData().getMin()));
     }
 
     //Updates the values inside the User Data and writes it inside the .txt 
@@ -113,10 +88,6 @@ public class MainFrame extends javax.swing.JFrame {
         } else {
             Static.data.getUserData().setShowSavedMessage(false);
         }
-        //Saves the values from the spinners of sec and mins into the corresp-
-        //onding values on user data.
-        Static.data.getUserData().setSec("" + jSpinner_seconds.getValue());
-        Static.data.getUserData().setMin("" + jSpinner_minutes.getValue());
         //Updates the info of the .txt file.
         Static.data.updateInfo();
     }
@@ -129,15 +100,15 @@ public class MainFrame extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jButton_stop = new javax.swing.JButton();
-        jButton_start = new javax.swing.JButton();
         jRadioButton_show_saved_alert = new javax.swing.JRadioButton();
         jLabel2 = new javax.swing.JLabel();
         sec = new javax.swing.JLabel();
         jRadioButton_CTRL_and_G = new javax.swing.JRadioButton();
         jRadioButton_CTRL_and_S = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
-        jSpinner_minutes = new javax.swing.JSpinner();
-        jSpinner_seconds = new javax.swing.JSpinner();
+        jButton1 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -151,18 +122,10 @@ public class MainFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButton_stop.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton_stop.setText("Stop");
+        jButton_stop.setText("START/STOP");
         jButton_stop.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_stopActionPerformed(evt);
-            }
-        });
-
-        jButton_start.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton_start.setText("Start");
-        jButton_start.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_startActionPerformed(evt);
             }
         });
 
@@ -199,13 +162,55 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("ACTION");
 
-        jSpinner_minutes.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jButton1.setText("Other options");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
-        jSpinner_seconds.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextField1.setText("jTextField1");
+
+        jTextField2.setText("jTextField2");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jRadioButton_CTRL_and_S)
+                        .addComponent(jRadioButton_CTRL_and_G)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(sec)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(96, 96, 96))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton_stop, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jRadioButton_show_saved_alert)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(69, 69, 69))
+        );
+        jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,61 +218,26 @@ public class MainFrame extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton_start, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton_stop, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(65, 65, 65)
-                                        .addComponent(jLabel2))
-                                    .addComponent(jRadioButton_show_saved_alert)
-                                    .addComponent(jSpinner_minutes, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jRadioButton_CTRL_and_S))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(sec)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(75, 75, 75)
-                                .addComponent(sec))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(47, 47, 47)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(28, 28, 28)
-                                        .addComponent(jLabel1))
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jRadioButton_CTRL_and_S)
-                                        .addComponent(jRadioButton_CTRL_and_G))))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jSpinner_seconds, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton_CTRL_and_S)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jRadioButton_CTRL_and_G)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(sec)
-                .addGap(7, 7, 7)
-                .addComponent(jSpinner_seconds, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(jSpinner_minutes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jRadioButton_CTRL_and_G)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel2)
+                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(102, 102, 102)
+                        .addComponent(jButton1)))
                 .addGap(18, 18, 18)
                 .addComponent(jRadioButton_show_saved_alert)
-                .addGap(26, 26, 26)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton_start)
-                    .addComponent(jButton_stop))
-                .addContainerGap(93, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 193, Short.MAX_VALUE)
+                .addComponent(jButton_stop)
+                .addGap(30, 30, 30))
         );
 
         jTabbedPane1.addTab("Main", jPanel1);
@@ -334,7 +304,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(twitter1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(alllinks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addContainerGap(376, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -373,11 +343,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton_startActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_startActionPerformed
-        //Start the threads
-        startWorking();
-    }//GEN-LAST:event_jButton_startActionPerformed
 
     private void startWorking() {
         try {
@@ -462,12 +427,17 @@ public class MainFrame extends javax.swing.JFrame {
         Static.run.open_link("https://justvice.github.io");
     }//GEN-LAST:event_twitter1MouseClicked
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        OtherSaveOptions otherSaveOptions = new OtherSaveOptions();
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Github;
     private javax.swing.JLabel alllinks;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton_start;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton_stop;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -480,9 +450,9 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButton_CTRL_and_G;
     private javax.swing.JRadioButton jRadioButton_CTRL_and_S;
     private javax.swing.JRadioButton jRadioButton_show_saved_alert;
-    private javax.swing.JSpinner jSpinner_minutes;
-    private javax.swing.JSpinner jSpinner_seconds;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel sec;
     private javax.swing.JLabel twitter;
     private javax.swing.JLabel twitter1;
