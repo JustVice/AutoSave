@@ -9,7 +9,7 @@ public class saveMessage extends javax.swing.JFrame implements Runnable {
     private final int time;
 
     public saveMessage() {
-        this.time = Static.time_message_until_dispose;
+        this.time = 1500;
         setUndecorated(true);
         initComponents();
         startT();

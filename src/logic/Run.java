@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 public class Run {
 
     public Run() {
-        Static.data.LoadData();
+//        Static.data.LoadData();
         MainFrame frame = new MainFrame();
     }
 
@@ -31,8 +31,8 @@ public class Run {
         return totalTime;
     }
 
-    public void savedMe() {
-        if (Static.show_saved_message) {
+    public void MESSAGE_SAVED() {
+        if (Static.SHOW_SAVE_MESSAGE_ON_DISPLAY) {
             saveMessage a = new saveMessage();
         }
     }
@@ -48,24 +48,24 @@ public class Run {
     }
 
     /**
-     * 0=Error 1=Message 2=Alert 3=What
+     * Error Message Alert What
      *
      * @param type
      * @param message
      * @param title
      */
-    public void message(String message, String title, int type) {
-        switch (type) {
-            case 0:/*Error*/
+    public void message(String message, String title, String messageType) {
+        switch (messageType) {
+            case "Error":/*Error*/
                 JOptionPane.showMessageDialog(null, message, title, 0);
                 break;
-            case 1:/*Message*/
+            case "Message":/*Message*/
                 JOptionPane.showMessageDialog(null, message, title, 1);
                 break;
-            case 2:/*Alert*/
+            case "Alert":/*Alert*/
                 JOptionPane.showMessageDialog(null, message, title, 2);
                 break;
-            case 3:/*What*/
+            case "What":/*What*/
                 JOptionPane.showMessageDialog(null, message, title, 3);
                 break;
 

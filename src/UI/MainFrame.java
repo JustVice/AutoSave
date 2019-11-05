@@ -2,11 +2,14 @@ package UI;
 
 import javax.swing.JOptionPane;
 import logic.Static;
-import logic.autoSaveRun;
+import logic.AutoSaveController;
 
 public class MainFrame extends javax.swing.JFrame {
 
-    private autoSaveRun auto_save_run;
+    private AutoSaveController AUTO_SAVE_CONTROLLER;
+    private final String START_BUTTON_TEXT = "Start";
+    private final String STOP_BUTTON_TEXT = "Stop";
+    private boolean IS_AUTO_SAVE_WORKING = false;
 
     public MainFrame() {
         initComponents();
@@ -29,58 +32,40 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     private void UI_SETTINGS() {
-        //Sets combo CTRL + S enabled.
-        jRadioButton_CTRL_and_S.setSelected(true);
-        //Makes the "Stop" jbutton not able to be pressed.
-        jButton_stop.setEnabled(false);
+        CHANGE_START_STOP_BUTTON_TEXT(START_BUTTON_TEXT);
     }
 
     private void UI_SETTINGS_USERDATA() {
         //If show_saved_message is true, the show saved alert will be selected
         //or not.
-        if (Static.show_saved_message) {
+        if (Static.SHOW_SAVE_MESSAGE_ON_DISPLAY) {
             jRadioButton_show_saved_alert.setSelected(true);
         } else {
             jRadioButton_show_saved_alert.setSelected(false);
         }
-        //If "savePrefix" is "S" the CTRL + S combobox will be selected.
-        //If "savePrefix" is "G" the CTRL + G combobox will be selected.
-        switch (Static.data.getUserData().getSavePrefix()) {
-            case "S":
-                jRadioButton_CTRL_and_S.setSelected(true);
-                break;
-            case "G":
-                jRadioButton_CTRL_and_G.setSelected(true);
-                break;
-            default:
-                Static.run.message("INTERTAL ERROR. ERROR CODE: 000./n", "ERROR 000", 0);
-                jRadioButton_CTRL_and_S.setSelected(true);
-                throw new AssertionError();
-        }
-        //If show show_saved_message on User Data is true the combobox of
-        //show saved message will be selected. Also, the show_saved_message
-        //on Static class will be set as the same value as the User Data one.
+
+        //Display saved message switch
         if (Static.data.getUserData().isShowSavedMessage()) {
             jRadioButton_show_saved_alert.setSelected(true);
-            Static.show_saved_message = true;
+            Static.SHOW_SAVE_MESSAGE_ON_DISPLAY = true;
         } else {
             jRadioButton_show_saved_alert.setSelected(false);
-            Static.show_saved_message = false;
+            Static.SHOW_SAVE_MESSAGE_ON_DISPLAY = false;
         }
     }
 
     //Updates the values inside the User Data and writes it inside the .txt 
     //user data file.
-    private void save_user_settings() {
+    private void SAVE_USER_DATA() {
         //If CTRL + S is selected, "S" will be saved inside the savePrefix
         //value.
-        if (jRadioButton_CTRL_and_S.isSelected()) {
-            Static.data.getUserData().setSavePrefix("S");
-        } else {
-            //If CTRL + G is selected, "G" will be saved inside the savePrefix
-            //value.
-            Static.data.getUserData().setSavePrefix("G");
-        }
+//        if (jRadioButton_CTRL_and_S.isSelected()) {
+//            Static.data.getUserData().setSavePrefix("S");
+//        } else {
+//            //If CTRL + G is selected, "G" will be saved inside the savePrefix
+//            //value.
+//            Static.data.getUserData().setSavePrefix("G");
+//        }
         //If combobox show saved alert is selected showSavedMessage on User Data
         //will be updated.
         if (jRadioButton_show_saved_alert.isSelected()) {
@@ -92,6 +77,15 @@ public class MainFrame extends javax.swing.JFrame {
         Static.data.updateInfo();
     }
 
+    private void CHANGE_START_STOP_BUTTON_TEXT(String STATUS) {
+        this.jButton_START_AUTO_SAVE.setText(STATUS);
+    }
+
+    private void ABLE_DISABLE_TEXT_FIELDS(boolean STATUS) {
+        this.jTextField_minutes.setEnabled(STATUS);
+        this.jTextField_seconds.setEnabled(STATUS);
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -99,17 +93,17 @@ public class MainFrame extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
-        jButton_stop = new javax.swing.JButton();
+        jButton_START_AUTO_SAVE = new javax.swing.JButton();
         jRadioButton_show_saved_alert = new javax.swing.JRadioButton();
+        jLabel1 = new javax.swing.JLabel();
+        jComboBox_save_option = new javax.swing.JComboBox<>();
+        jPanel4 = new javax.swing.JPanel();
+        jTextField_minutes = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         sec = new javax.swing.JLabel();
-        jRadioButton_CTRL_and_G = new javax.swing.JRadioButton();
-        jRadioButton_CTRL_and_S = new javax.swing.JRadioButton();
-        jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        jTextField_seconds = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -117,127 +111,97 @@ public class MainFrame extends javax.swing.JFrame {
         Github = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         alllinks = new javax.swing.JLabel();
-        twitter1 = new javax.swing.JLabel();
+        jlabe_webpage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton_stop.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton_stop.setText("START/STOP");
-        jButton_stop.addActionListener(new java.awt.event.ActionListener() {
+        jButton_START_AUTO_SAVE.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jButton_START_AUTO_SAVE.setText("START/STOP");
+        jButton_START_AUTO_SAVE.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_stopActionPerformed(evt);
+                jButton_START_AUTO_SAVEActionPerformed(evt);
             }
         });
 
-        jRadioButton_show_saved_alert.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jRadioButton_show_saved_alert.setText("Show \"saved\" alert");
+        jRadioButton_show_saved_alert.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jRadioButton_show_saved_alert.setText("Display saved message");
         jRadioButton_show_saved_alert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioButton_show_saved_alertActionPerformed(evt);
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setText("Save option");
+
+        jComboBox_save_option.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jComboBox_save_option.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CTRL + S", "CTRL + G", "CTRL + A", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12" }));
+
+        jTextField_minutes.setText("0");
+
         jLabel2.setText("MINUTES");
 
         sec.setText("SECONDS");
 
-        buttonGroup1.add(jRadioButton_CTRL_and_G);
-        jRadioButton_CTRL_and_G.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jRadioButton_CTRL_and_G.setText("CTRL + G");
-        jRadioButton_CTRL_and_G.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton_CTRL_and_GActionPerformed(evt);
-            }
-        });
+        jTextField_seconds.setText("10");
 
-        buttonGroup1.add(jRadioButton_CTRL_and_S);
-        jRadioButton_CTRL_and_S.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jRadioButton_CTRL_and_S.setText("CTRL + S");
-        jRadioButton_CTRL_and_S.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton_CTRL_and_SActionPerformed(evt);
-            }
-        });
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setText("ACTION");
-
-        jButton1.setText("Other options");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jTextField1.setText("jTextField1");
-
-        jTextField2.setText("jTextField2");
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(sec))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextField_seconds, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
+                    .addComponent(jTextField_minutes))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField_seconds, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sec))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField_minutes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(42, 42, 42))
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(47, 47, 47)
+                .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jRadioButton_CTRL_and_S)
-                        .addComponent(jRadioButton_CTRL_and_G)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(sec)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(96, 96, 96))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton_stop, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jRadioButton_show_saved_alert)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(69, 69, 69))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton_START_AUTO_SAVE, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jRadioButton_show_saved_alert)
+                    .addComponent(jLabel1)
+                    .addComponent(jComboBox_save_option, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButton_CTRL_and_S))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(sec)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jRadioButton_CTRL_and_G)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel2)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(102, 102, 102)
-                        .addComponent(jButton1)))
-                .addGap(18, 18, 18)
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComboBox_save_option, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jRadioButton_show_saved_alert)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 193, Short.MAX_VALUE)
-                .addComponent(jButton_stop)
-                .addGap(30, 30, 30))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton_START_AUTO_SAVE)
+                .addContainerGap(96, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Main", jPanel1);
@@ -277,55 +241,74 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        twitter1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        twitter1.setText("<html><a href=\"http://www.google.com\">Web page</a></html>");
-        twitter1.addMouseListener(new java.awt.event.MouseAdapter() {
+        jlabe_webpage.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jlabe_webpage.setText("<html><a href=\"http://www.google.com\">Web page</a></html>");
+        jlabe_webpage.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                twitter1MouseClicked(evt);
+                jlabe_webpageMouseClicked(evt);
             }
         });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 220, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel3)
+                        .addComponent(jLabel4)
+                        .addComponent(jLabel6)
+                        .addComponent(twitter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Github, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jlabe_webpage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(alllinks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel5))
+                    .addContainerGap()))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 251, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jLabel4)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel3)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addComponent(jLabel6)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(twitter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(alllinks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(Github, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jlabe_webpage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel6)
-                            .addComponent(twitter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Github, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(twitter1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(alllinks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addContainerGap(376, Short.MAX_VALUE))
+                .addGap(38, 38, 38)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(twitter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(alllinks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Github, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(twitter1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(182, Short.MAX_VALUE))
+                .addGap(30, 30, 30)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("About", jPanel2);
@@ -344,101 +327,96 @@ public class MainFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void startWorking() {
-        try {
-            int undertime = 0;
-            
-            Static.time_before_save = Static.run.timeConverter(jTextField_seconds.getText(), jTextField_minutes.getText());
-            if (Static.time_before_save <= 10000) {
-                undertime = JOptionPane.showConfirmDialog(null, "You are setting an under/equals 10 seconds timelapse to perform a CTRL + S/G"
-                        + "\nThere will be a continuos spam of CTRL + S/G. It is recomended to set 2 minutes.\n"
-                        + "Do you want to continue?");
-            }
-            if (undertime == 0) {
-                byte option = 0;
-                if (jRadioButton_CTRL_and_G.isSelected()) {
-                    option = (byte) 1;
+    private void AUTO_SAVE_CONTROLLER() {
+        if (!IS_AUTO_SAVE_WORKING) {
+            if (IS_DELAY_OVER_10SECONDS()) {
+                START_AUTO_SAVE();
+            } else {
+                if (CONTINUE_WITH_DELAY_UNDER_10SECONDS()) {
+                    START_AUTO_SAVE();
                 }
-                jButton_stop.setEnabled(true);
-                jButton_start.setEnabled(false);
-                save_user_settings();
             }
-        } catch (Exception e) {
+        } else {
+            STOP_AUTO_SAVE();
         }
     }
 
-    private void timeChanged() {
-        try {
-            if (Integer.parseInt(jTextField_seconds.getText()) < 2 && jTextField_minutes.getText().equals("0")) {
-                jTextField_seconds.setText("10");
-            }
-            Static.time_before_save = Static.run.timeConverter(jTextField_seconds.getText(), jTextField_minutes.getText());
-        } catch (Exception e) {
-            System.out.println("Error en timeChanged");
-        }
-
+    private void START_AUTO_SAVE() {
+        this.AUTO_SAVE_CONTROLLER = new AutoSaveController();
+        this.AUTO_SAVE_CONTROLLER.startWorking();
+        this.IS_AUTO_SAVE_WORKING = true;
+        CHANGE_START_STOP_BUTTON_TEXT(STOP_BUTTON_TEXT);
+        System.out.println("Auto save working.");
     }
 
-    private void errorMessage(String title, String message) {
-        JOptionPane.showMessageDialog(null, message, title, 0);
+    private void STOP_AUTO_SAVE() {
+        this.AUTO_SAVE_CONTROLLER.setThreadActivated(false);
+        this.IS_AUTO_SAVE_WORKING = false;
+        CHANGE_START_STOP_BUTTON_TEXT(START_BUTTON_TEXT);
+        System.out.println("Auto save stopped.");
     }
 
-    private void jButton_stopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_stopActionPerformed
-        for (autoSaveRun a : listaHilos) {
-            a.setRun(false);
+    private boolean IS_DELAY_OVER_10SECONDS() {
+        int DELAY_BEFORE_SAVE = Static.run.timeConverter(jTextField_seconds.getText(),
+                jTextField_minutes.getText());
+        if (DELAY_BEFORE_SAVE > 10000) {
+            return true;
+        } else {
+            return false;
         }
-        jButton_stop.setEnabled(false);
-        jButton_start.setEnabled(true);
-    }//GEN-LAST:event_jButton_stopActionPerformed
+    }
 
-    private void jRadioButton_CTRL_and_SActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton_CTRL_and_SActionPerformed
-        Static.save_type_action = 0;
-        save_user_settings();
-    }//GEN-LAST:event_jRadioButton_CTRL_and_SActionPerformed
+    private boolean CONTINUE_WITH_DELAY_UNDER_10SECONDS() {
+        String message = "\"You are setting an under/equals 10 seconds timelapse to perform a CTRL + S/G\"\n"
+                + "+ \"\\nThere will be a continuos spam of CTRL + S/G. It is recomended to set 2 minutes.\\n\"\n"
+                + "+ \"Do you want to continue?\"";
+        int option = JOptionPane.showConfirmDialog(null, message);
+        if (option == 0) {
+            System.out.println("Auto save confirmed to work with under 10 seconds delay.");
+            return true;
+        } else {
+            System.out.println("Auto save cancelled due short delay time by user.");
+            return false;
+        }
+    }
+
+    private void jButton_START_AUTO_SAVEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_START_AUTO_SAVEActionPerformed
+        AUTO_SAVE_CONTROLLER();
+    }//GEN-LAST:event_jButton_START_AUTO_SAVEActionPerformed
 
     private void jRadioButton_show_saved_alertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton_show_saved_alertActionPerformed
         if (jRadioButton_show_saved_alert.isSelected()) {
-            Static.show_saved_message = true;
-            save_user_settings();
+            Static.SHOW_SAVE_MESSAGE_ON_DISPLAY = true;
+            SAVE_USER_DATA();
         } else {
-            Static.show_saved_message = false;
-            save_user_settings();
+            Static.SHOW_SAVE_MESSAGE_ON_DISPLAY = false;
+            SAVE_USER_DATA();
         }
     }//GEN-LAST:event_jRadioButton_show_saved_alertActionPerformed
 
-    private void jRadioButton_CTRL_and_GActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton_CTRL_and_GActionPerformed
-        Static.save_type_action = 1;
-        save_user_settings();
-    }//GEN-LAST:event_jRadioButton_CTRL_and_GActionPerformed
-
     private void twitterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_twitterMouseClicked
-        Static.run.open_link("https://twitter.com/JustVice1");
+        Static.run.open_link("https://justvice.github.io/s/twitter");
     }//GEN-LAST:event_twitterMouseClicked
 
     private void GithubMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GithubMouseClicked
-        Static.run.open_link("https://github.com/JustVice?tab=repositories");
+        Static.run.open_link("https://justvice.github.io/s/github-repos");
     }//GEN-LAST:event_GithubMouseClicked
 
     private void alllinksMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_alllinksMouseClicked
-        Static.run.open_link("https://justvice.wixsite.com/info");
+        Static.run.open_link("https://justvice.github.io/s/links");
     }//GEN-LAST:event_alllinksMouseClicked
 
-    private void twitter1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_twitter1MouseClicked
+    private void jlabe_webpageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlabe_webpageMouseClicked
         Static.run.open_link("https://justvice.github.io");
-    }//GEN-LAST:event_twitter1MouseClicked
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        OtherSaveOptions otherSaveOptions = new OtherSaveOptions();
-        dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jlabe_webpageMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Github;
     private javax.swing.JLabel alllinks;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton_stop;
+    private javax.swing.JButton jButton_START_AUTO_SAVE;
+    private javax.swing.JComboBox<String> jComboBox_save_option;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -447,15 +425,15 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JRadioButton jRadioButton_CTRL_and_G;
-    private javax.swing.JRadioButton jRadioButton_CTRL_and_S;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JRadioButton jRadioButton_show_saved_alert;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField_minutes;
+    private javax.swing.JTextField jTextField_seconds;
+    private javax.swing.JLabel jlabe_webpage;
     private javax.swing.JLabel sec;
     private javax.swing.JLabel twitter;
-    private javax.swing.JLabel twitter1;
     // End of variables declaration//GEN-END:variables
 
 }

@@ -22,15 +22,13 @@ public class Static {
     //Static boolean. If true the saved frame will be displayed. It needs to be
     //static to be used inside a thread and change the state as the thread is
     //running.
-    public static boolean show_saved_message = true;
-    //Time before the "saved" message disappears.
-    public static int time_message_until_dispose = 1500;
+    public static boolean SHOW_SAVE_MESSAGE_ON_DISPLAY = true;
     //Saves the milliseconds  that need to be passed before the save action is
     //performed.
-    public static int time_before_save = 0;
+    public static int time_before_save = 2000;
     //If 0 the program will perform CTRL + S.
     //If 1 the program will perform CTRL + G.
-    public static byte save_type_action = 0;
+    public static String SAVE_OPTION_TYPE = "CTRL + S";
 
     //Sets the logo of the program.
     public static Image getIconImage() {
