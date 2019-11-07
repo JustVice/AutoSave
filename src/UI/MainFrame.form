@@ -56,8 +56,9 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel_days" min="-2" max="-2" attributes="0"/>
                           <Component id="jButton_START_AUTO_SAVE" min="-2" pref="230" max="-2" attributes="0"/>
+                          <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
                           <Component id="jRadioButton_show_saved_alert" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jComboBox_save_option" alignment="0" min="-2" pref="219" max="-2" attributes="0"/>
@@ -77,9 +78,11 @@
                       <Component id="jRadioButton_show_saved_alert" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jPanel4" min="-2" pref="70" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jLabel_days" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="32" max="32767" attributes="0"/>
                       <Component id="jButton_START_AUTO_SAVE" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="96" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -188,6 +191,7 @@
                     <Property name="text" type="java.lang.String" value="0"/>
                   </Properties>
                   <Events>
+                    <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextField_minutesKeyReleased"/>
                     <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextField_minutesKeyTyped"/>
                   </Events>
                 </Component>
@@ -211,6 +215,11 @@
                 </Component>
               </SubComponents>
             </Container>
+            <Component class="javax.swing.JLabel" name="jLabel_days">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Days: "/>
+              </Properties>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="jPanel2">

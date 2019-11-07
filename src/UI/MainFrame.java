@@ -14,8 +14,8 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
 
     //THREAD CONTROLLER - DIFFERENT THREAD ACTIONS TO PERFORM.
     private String THREAD_ACTION = "";
-    private String SECONDS_CONTROLLER = "SECONDS_CONTROLLER";
-    private String MINUTES_CONTROLLER = "MINUTES_CONTROLLER";
+    private final String SECONDS_CONTROLLER = "SECONDS_CONTROLLER";
+    private final String MINUTES_CONTROLLER = "MINUTES_CONTROLLER";
 
     public MainFrame() {
         initComponents();
@@ -39,6 +39,8 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
 
     private void UI_SETTINGS() {
         CHANGE_START_STOP_BUTTON_TEXT(START_BUTTON_TEXT);
+        this.jLabel_days.setText("");
+        jLabel_days.setForeground(java.awt.Color.red);
     }
 
     private void UI_SETTINGS_USERDATA() {
@@ -92,6 +94,27 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
         this.jTextField_seconds.setEnabled(STATUS);
     }
 
+    private void DAYS_LABEL_MARK() {
+        int minutes = Integer.parseInt(this.jTextField_minutes.getText());
+        if (minutes < 1440) {
+            this.jLabel_days.setText("");
+        } else {
+            this.jLabel_days.setText("Days: 1");
+        }
+        if (minutes >= 2280) {
+            this.jLabel_days.setText("Days: 2");
+        }
+        if (minutes >= 4320) {
+            this.jLabel_days.setText("Days: 3");
+        }
+        if (minutes >= 5760) {
+            this.jLabel_days.setText("Days: 3");
+        }
+        //////
+        if(minutes == 4654){
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -108,6 +131,7 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
         jLabel2 = new javax.swing.JLabel();
         sec = new javax.swing.JLabel();
         jTextField_seconds = new javax.swing.JTextField();
+        jLabel_days = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -145,6 +169,9 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
 
         jTextField_minutes.setText("0");
         jTextField_minutes.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField_minutesKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextField_minutesKeyTyped(evt);
             }
@@ -190,6 +217,8 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
                 .addGap(42, 42, 42))
         );
 
+        jLabel_days.setText("Days: ");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -197,8 +226,9 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel_days)
                     .addComponent(jButton_START_AUTO_SAVE, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jRadioButton_show_saved_alert)
                     .addComponent(jLabel1)
                     .addComponent(jComboBox_save_option, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -215,9 +245,11 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
                 .addComponent(jRadioButton_show_saved_alert)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel_days)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addComponent(jButton_START_AUTO_SAVE)
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addGap(38, 38, 38))
         );
 
         jTabbedPane1.addTab("Main", jPanel1);
@@ -375,11 +407,7 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
     private boolean IS_DELAY_OVER_10SECONDS() {
         int DELAY_BEFORE_SAVE = Static.run.MILLISECONDS_TIME_CONVERTER(jTextField_seconds.getText(),
                 jTextField_minutes.getText());
-        if (DELAY_BEFORE_SAVE > 10000) {
-            return true;
-        } else {
-            return false;
-        }
+        return DELAY_BEFORE_SAVE > 10000;
     }
 
     private boolean CONTINUE_WITH_DELAY_UNDER_10SECONDS() {
@@ -451,7 +479,7 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
 
     private void jTextField_minutesKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_minutesKeyTyped
         char c = evt.getKeyChar();
-        if (!(Character.isDigit(c)) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE || jTextField_minutes.getText().length() == 2) {
+        if (!(Character.isDigit(c)) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE || jTextField_minutes.getText().length() == 4) {
             evt.consume();
         }
 
@@ -466,11 +494,15 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
 
         //Controls if the seconds text field has a number over 60.
         Thread thread = new Thread(this);
-        this.THREAD_ACTION = this.SECONDS_CONTROLLER;
+        this.THREAD_ACTION = this.MINUTES_CONTROLLER;
         thread.start();
 
         //PLACES NUMBER TYPED.
     }//GEN-LAST:event_jTextField_minutesKeyTyped
+
+    private void jTextField_minutesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_minutesKeyReleased
+        DAYS_LABEL_MARK();
+    }//GEN-LAST:event_jTextField_minutesKeyReleased
 
     @Override
     public void run() {
@@ -483,7 +515,18 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
                         this.jTextField_seconds.setText("60");
                         jTextField_seconds.setCaretPosition(jTextField_seconds.getDocument().getLength());
                     }
-                } catch (Exception e) {
+                } catch (InterruptedException | NumberFormatException e) {
+                }
+                break;
+            case "MINUTES_CONTROLLER":
+                try {
+                    Thread.sleep(50);
+                    if (Integer.parseInt(jTextField_minutes.getText()) > 5760) {
+                        //SETS TEXT TO 4320. MOVES CURSOR TO THE END OF THE JTEXTFIELD.
+                        this.jTextField_minutes.setText("5760");
+                        jTextField_minutes.setCaretPosition(jTextField_minutes.getDocument().getLength());
+                    }
+                } catch (InterruptedException | NumberFormatException e) {
                 }
                 break;
             default:
@@ -504,6 +547,7 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel_days;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
