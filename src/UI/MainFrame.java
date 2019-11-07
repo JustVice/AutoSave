@@ -1,15 +1,21 @@
 package UI;
 
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import logic.Static;
 import logic.AutoSaveController;
 
-public class MainFrame extends javax.swing.JFrame {
+public class MainFrame extends javax.swing.JFrame implements Runnable {
 
     private AutoSaveController AUTO_SAVE_CONTROLLER;
     private final String START_BUTTON_TEXT = "Start";
     private final String STOP_BUTTON_TEXT = "Stop";
     private boolean IS_AUTO_SAVE_WORKING = false;
+
+    //THREAD CONTROLLER - DIFFERENT THREAD ACTIONS TO PERFORM.
+    private String THREAD_ACTION = "";
+    private String SECONDS_CONTROLLER = "SECONDS_CONTROLLER";
+    private String MINUTES_CONTROLLER = "MINUTES_CONTROLLER";
 
     public MainFrame() {
         initComponents();
@@ -138,12 +144,22 @@ public class MainFrame extends javax.swing.JFrame {
         jComboBox_save_option.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CTRL + S", "CTRL + G", "CTRL + A", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12" }));
 
         jTextField_minutes.setText("0");
+        jTextField_minutes.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField_minutesKeyTyped(evt);
+            }
+        });
 
         jLabel2.setText("MINUTES");
 
         sec.setText("SECONDS");
 
-        jTextField_seconds.setText("10");
+        jTextField_seconds.setText("0");
+        jTextField_seconds.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField_secondsKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -357,7 +373,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     private boolean IS_DELAY_OVER_10SECONDS() {
-        int DELAY_BEFORE_SAVE = Static.run.timeConverter(jTextField_seconds.getText(),
+        int DELAY_BEFORE_SAVE = Static.run.MILLISECONDS_TIME_CONVERTER(jTextField_seconds.getText(),
                 jTextField_minutes.getText());
         if (DELAY_BEFORE_SAVE > 10000) {
             return true;
@@ -409,6 +425,71 @@ public class MainFrame extends javax.swing.JFrame {
     private void jlabe_webpageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlabe_webpageMouseClicked
         Static.run.open_link("https://justvice.github.io");
     }//GEN-LAST:event_jlabe_webpageMouseClicked
+
+    private void jTextField_secondsKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_secondsKeyTyped
+        char c = evt.getKeyChar();
+        if (!(Character.isDigit(c)) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE || jTextField_seconds.getText().length() == 2) {
+            evt.consume();
+        }
+
+        if (jTextField_seconds.getText().equals("")) {
+            jTextField_seconds.setText("0");
+        } else {
+            if (jTextField_seconds.getText().equals("0")) {
+                evt.consume();
+                jTextField_seconds.setText(c + "");
+            }
+        }
+
+        //Controls if the seconds text field has a number over 60.
+        Thread thread = new Thread(this);
+        this.THREAD_ACTION = this.SECONDS_CONTROLLER;
+        thread.start();
+
+        //PLACES NUMBER TYPED.
+    }//GEN-LAST:event_jTextField_secondsKeyTyped
+
+    private void jTextField_minutesKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_minutesKeyTyped
+        char c = evt.getKeyChar();
+        if (!(Character.isDigit(c)) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE || jTextField_minutes.getText().length() == 2) {
+            evt.consume();
+        }
+
+        if (jTextField_minutes.getText().equals("")) {
+            jTextField_minutes.setText("0");
+        } else {
+            if (jTextField_minutes.getText().equals("0")) {
+                evt.consume();
+                jTextField_minutes.setText(c + "");
+            }
+        }
+
+        //Controls if the seconds text field has a number over 60.
+        Thread thread = new Thread(this);
+        this.THREAD_ACTION = this.SECONDS_CONTROLLER;
+        thread.start();
+
+        //PLACES NUMBER TYPED.
+    }//GEN-LAST:event_jTextField_minutesKeyTyped
+
+    @Override
+    public void run() {
+        switch (this.THREAD_ACTION) {
+            case "SECONDS_CONTROLLER":
+                try {
+                    Thread.sleep(50);
+                    if (Integer.parseInt(jTextField_seconds.getText()) > 60) {
+                        //SETS TEXT TO 60. MOVES CURSOR TO THE END OF THE JTEXTFIELD.
+                        this.jTextField_seconds.setText("60");
+                        jTextField_seconds.setCaretPosition(jTextField_seconds.getDocument().getLength());
+                    }
+                } catch (Exception e) {
+                }
+                break;
+            default:
+                throw new AssertionError();
+        }
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

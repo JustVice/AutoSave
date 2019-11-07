@@ -18,7 +18,7 @@ public class Run {
         MainFrame frame = new MainFrame();
     }
 
-    public int timeConverter(String secS, String minS) {
+    public int MILLISECONDS_TIME_CONVERTER(String secS, String minS) {
         int sec = Integer.parseInt(secS);
         int min = Integer.parseInt(minS);
         int totalTime = 0;
