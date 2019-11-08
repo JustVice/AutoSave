@@ -111,7 +111,8 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
             this.jLabel_days.setText("Days: 3");
         }
         //////
-        if(minutes == 4654){
+        if (minutes == 4654) {
+            this.jLabel_days.setText("Inki was not here.");
         }
     }
 
@@ -166,6 +167,11 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
 
         jComboBox_save_option.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jComboBox_save_option.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CTRL + S", "CTRL + G", "CTRL + A", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12" }));
+        jComboBox_save_option.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_save_optionActionPerformed(evt);
+            }
+        });
 
         jTextField_minutes.setText("0");
         jTextField_minutes.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -390,6 +396,8 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
     }
 
     private void START_AUTO_SAVE() {
+        SET_DELAY_TIME_TO_SAVE();
+        SET_SAVE_TYPE();
         this.AUTO_SAVE_CONTROLLER = new AutoSaveController();
         this.AUTO_SAVE_CONTROLLER.startWorking();
         this.IS_AUTO_SAVE_WORKING = true;
@@ -422,6 +430,17 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
             System.out.println("Auto save cancelled due short delay time by user.");
             return false;
         }
+    }
+
+    private void SET_DELAY_TIME_TO_SAVE() {
+        String seconds = this.jTextField_seconds.getText();
+        String minutes = this.jTextField_minutes.getText();
+        Static.TIME_DELAY_TO_SAVE = Static.run.MILLISECONDS_TIME_CONVERTER(seconds, minutes);
+    }
+
+    private void SET_SAVE_TYPE() {
+        System.out.println("Save type setled to: " + this.jComboBox_save_option.getSelectedItem().toString());
+        Static.SAVE_OPTION_TYPE = this.jComboBox_save_option.getSelectedItem().toString();
     }
 
     private void jButton_START_AUTO_SAVEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_START_AUTO_SAVEActionPerformed
@@ -503,6 +522,10 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
     private void jTextField_minutesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_minutesKeyReleased
         DAYS_LABEL_MARK();
     }//GEN-LAST:event_jTextField_minutesKeyReleased
+
+    private void jComboBox_save_optionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_save_optionActionPerformed
+        SET_SAVE_TYPE();
+    }//GEN-LAST:event_jComboBox_save_optionActionPerformed
 
     @Override
     public void run() {

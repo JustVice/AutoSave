@@ -25,7 +25,7 @@ public class Static {
     public static boolean SHOW_SAVE_MESSAGE_ON_DISPLAY = true;
     //Saves the milliseconds  that need to be passed before the save action is
     //performed.
-    public static int time_before_save = 2000;
+    public static int TIME_DELAY_TO_SAVE = 2000;
     //If 0 the program will perform CTRL + S.
     //If 1 the program will perform CTRL + G.
     public static String SAVE_OPTION_TYPE = "CTRL + S";

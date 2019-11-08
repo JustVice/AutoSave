@@ -18,17 +18,17 @@ public class Run {
         MainFrame frame = new MainFrame();
     }
 
-    public int MILLISECONDS_TIME_CONVERTER(String secS, String minS) {
-        int sec = Integer.parseInt(secS);
-        int min = Integer.parseInt(minS);
-        int totalTime = 0;
-        if (sec != 0) {
-            totalTime += (sec * 1000);
+    public int MILLISECONDS_TIME_CONVERTER(String seconds_string, String minutes_string) {
+        int seconds = Integer.parseInt(seconds_string);
+        int minutes = Integer.parseInt(minutes_string);
+        int milliseconds = 0;
+        if (seconds != 0) {
+            milliseconds += (seconds * 1000);
         }
-        if (min != 0) {
-            totalTime += (min * 60000);
+        if (minutes != 0) {
+            milliseconds += (minutes * 60000);
         }
-        return totalTime;
+        return milliseconds;
     }
 
     public void MESSAGE_SAVED() {
