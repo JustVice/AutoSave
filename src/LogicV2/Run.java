@@ -1,7 +1,6 @@
 package LogicV2;
 
 import UI.saveMessage;
-import UI.MainFrame;
 import java.awt.Desktop;
 import java.awt.Frame;
 import java.io.BufferedReader;
@@ -19,8 +18,10 @@ import javax.swing.JOptionPane;
 public class Run {
 
     public Run() {
-        Memory.userDataV2.DATA_CONTROLLER();
-        MainFrame frame = new MainFrame();
+//        Memory.userDataV2.DATA_CONTROLLER();
+//        MainFrame frame = new MainFrame();
+UserDataV2 u = new UserDataV2();
+u.DATA_CONTROLLER();
     }
 
     public int MILLISECONDS_TIME_CONVERTER(String seconds_string, String minutes_string) {
@@ -119,7 +120,7 @@ public class Run {
             }
             entrada.close();
             buffer.close();
-            System.out.println("");
+//            System.out.println("");
         } catch (IOException ex) {
             System.out.println("File does not exist.\n");
         }
