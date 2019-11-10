@@ -2,8 +2,8 @@ package UI;
 
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
-import logic.Static;
-import logic.AutoSaveController;
+import LogicV2.Memory;
+import LogicV2.AutoSaveController;
 
 public class MainFrame extends javax.swing.JFrame implements Runnable {
 
@@ -32,9 +32,9 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
         //Prevents user to resize the window.
         setResizable(false);
         //Sets status bar info.
-        setTitle(Static.title + " " + Static.version);
+        setTitle(Memory.title + " " + Memory.version);
         //Sets the icon image.
-        setIconImage(Static.getIconImage());
+        setIconImage(Memory.getIconImage());
     }
 
     private void UI_SETTINGS() {
@@ -46,19 +46,19 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
     private void UI_SETTINGS_USERDATA() {
         //If show_saved_message is true, the show saved alert will be selected
         //or not.
-        if (Static.SHOW_SAVE_MESSAGE_ON_DISPLAY) {
+        if (Memory.SHOW_SAVE_MESSAGE_ON_DISPLAY) {
             jRadioButton_show_saved_alert.setSelected(true);
         } else {
             jRadioButton_show_saved_alert.setSelected(false);
         }
 
         //Display saved message switch
-        if (Static.data.getUserData().isShowSavedMessage()) {
+        if (Memory.data.getUserData().isShowSavedMessage()) {
             jRadioButton_show_saved_alert.setSelected(true);
-            Static.SHOW_SAVE_MESSAGE_ON_DISPLAY = true;
+            Memory.SHOW_SAVE_MESSAGE_ON_DISPLAY = true;
         } else {
             jRadioButton_show_saved_alert.setSelected(false);
-            Static.SHOW_SAVE_MESSAGE_ON_DISPLAY = false;
+            Memory.SHOW_SAVE_MESSAGE_ON_DISPLAY = false;
         }
     }
 
@@ -77,12 +77,12 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
         //If combobox show saved alert is selected showSavedMessage on User Data
         //will be updated.
         if (jRadioButton_show_saved_alert.isSelected()) {
-            Static.data.getUserData().setShowSavedMessage(true);
+            Memory.data.getUserData().setShowSavedMessage(true);
         } else {
-            Static.data.getUserData().setShowSavedMessage(false);
+            Memory.data.getUserData().setShowSavedMessage(false);
         }
         //Updates the info of the .txt file.
-        Static.data.updateInfo();
+        Memory.data.updateInfo();
     }
 
     private void CHANGE_START_STOP_BUTTON_TEXT(String STATUS) {
@@ -444,19 +444,19 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
     }
 
     private boolean SECURITY_NO_LESS_THAN_1_SECOND_DELAY() {
-        if (Static.TIME_DELAY_TO_SAVE > 1000) {
+        if (Memory.TIME_DELAY_TO_SAVE > 1000) {
             System.out.println("true");
             return true;
         } else {
             System.out.println("AutoSave stopped due security 1 second protocole.");
             String message = "For security reasons, you can't set a save delay of 1 second or less.";
-            Static.run.message(message, "No less than 1 second", "Alert");
+            Memory.run.message(message, "No less than 1 second", "Alert");
             return false;
         }
     }
 
     private boolean IS_DELAY_OVER_10SECONDS() {
-        int DELAY_BEFORE_SAVE = Static.run.MILLISECONDS_TIME_CONVERTER(jTextField_seconds.getText(),
+        int DELAY_BEFORE_SAVE = Memory.run.MILLISECONDS_TIME_CONVERTER(jTextField_seconds.getText(),
                 jTextField_minutes.getText());
         return DELAY_BEFORE_SAVE > 10000;
     }
@@ -478,12 +478,12 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
     private void SET_DELAY_TIME_TO_SAVE() {
         String seconds = this.jTextField_seconds.getText();
         String minutes = this.jTextField_minutes.getText();
-        Static.TIME_DELAY_TO_SAVE = Static.run.MILLISECONDS_TIME_CONVERTER(seconds, minutes);
+        Memory.TIME_DELAY_TO_SAVE = Memory.run.MILLISECONDS_TIME_CONVERTER(seconds, minutes);
     }
 
     private void SET_SAVE_TYPE() {
         System.out.println("Save type setled to: " + this.jComboBox_save_option.getSelectedItem().toString());
-        Static.SAVE_OPTION_TYPE = this.jComboBox_save_option.getSelectedItem().toString();
+        Memory.SAVE_OPTION_TYPE = this.jComboBox_save_option.getSelectedItem().toString();
     }
 
     private void jButton_START_AUTO_SAVEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_START_AUTO_SAVEActionPerformed
@@ -492,28 +492,28 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
 
     private void jRadioButton_show_saved_alertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton_show_saved_alertActionPerformed
         if (jRadioButton_show_saved_alert.isSelected()) {
-            Static.SHOW_SAVE_MESSAGE_ON_DISPLAY = true;
+            Memory.SHOW_SAVE_MESSAGE_ON_DISPLAY = true;
             SAVE_USER_DATA();
         } else {
-            Static.SHOW_SAVE_MESSAGE_ON_DISPLAY = false;
+            Memory.SHOW_SAVE_MESSAGE_ON_DISPLAY = false;
             SAVE_USER_DATA();
         }
     }//GEN-LAST:event_jRadioButton_show_saved_alertActionPerformed
 
     private void twitterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_twitterMouseClicked
-        Static.run.open_link("https://justvice.github.io/s/twitter");
+        Memory.run.open_link("https://justvice.github.io/s/twitter");
     }//GEN-LAST:event_twitterMouseClicked
 
     private void GithubMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GithubMouseClicked
-        Static.run.open_link("https://justvice.github.io/s/github-repos");
+        Memory.run.open_link("https://justvice.github.io/s/github-repos");
     }//GEN-LAST:event_GithubMouseClicked
 
     private void alllinksMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_alllinksMouseClicked
-        Static.run.open_link("https://justvice.github.io/s/links");
+        Memory.run.open_link("https://justvice.github.io/s/links");
     }//GEN-LAST:event_alllinksMouseClicked
 
     private void jlabe_webpageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlabe_webpageMouseClicked
-        Static.run.open_link("https://justvice.github.io");
+        Memory.run.open_link("https://justvice.github.io");
     }//GEN-LAST:event_jlabe_webpageMouseClicked
 
     private void jTextField_secondsKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_secondsKeyTyped

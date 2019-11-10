@@ -1,6 +1,6 @@
 package UI;
 
-import logic.Static;
+import LogicV2.Memory;
 
 public class Settings extends javax.swing.JFrame {
 
@@ -8,18 +8,18 @@ public class Settings extends javax.swing.JFrame {
         initComponents();
         UI_SETTINGS();
     }
-    
-    private void UI_SETTINGS(){
-       //Sets the frame at the center.
+
+    private void UI_SETTINGS() {
+        //Sets the frame at the center.
         this.setLocationRelativeTo(null);
         //Makes the frame visible.
         this.setVisible(true);
         //Prevents user to resize the window.
         setResizable(false);
         //Sets status bar info.
-        setTitle(Static.title + " " + Static.version);
+        setTitle(Memory.title + " " + Memory.version);
         //Sets the icon image.
-        setIconImage(Static.getIconImage());
+        setIconImage(Memory.getIconImage());
     }
 
     @SuppressWarnings("unchecked")
@@ -42,11 +42,11 @@ public class Settings extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        jCheckBox5 = new javax.swing.JCheckBox();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
-        jCheckBox4 = new javax.swing.JCheckBox();
+        jCheckBox_CENTER = new javax.swing.JCheckBox();
+        jCheckBox_UP_LEFT = new javax.swing.JCheckBox();
+        jCheckBox_DOWN_LEFT = new javax.swing.JCheckBox();
+        jCheckBox_DOWN_RIGHT = new javax.swing.JCheckBox();
+        jCheckBox_UP_RIGHT = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
         jRadioButton_show_saved_alert = new javax.swing.JRadioButton();
         jLabel8 = new javax.swing.JLabel();
@@ -161,7 +161,12 @@ public class Settings extends javax.swing.JFrame {
                 .addGap(0, 8, Short.MAX_VALUE))
         );
 
-        buttonGroup_save_position.add(jCheckBox5);
+        buttonGroup_save_position.add(jCheckBox_CENTER);
+        jCheckBox_CENTER.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox_CENTERActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -180,7 +185,7 @@ public class Settings extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addComponent(jCheckBox5))
+                        .addComponent(jCheckBox_CENTER))
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(113, 113, 113))
         );
@@ -191,7 +196,7 @@ public class Settings extends javax.swing.JFrame {
                 .addGap(38, 38, 38)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox5)
+                .addComponent(jCheckBox_CENTER)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -200,13 +205,33 @@ public class Settings extends javax.swing.JFrame {
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        buttonGroup_save_position.add(jCheckBox1);
+        buttonGroup_save_position.add(jCheckBox_UP_LEFT);
+        jCheckBox_UP_LEFT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox_UP_LEFTActionPerformed(evt);
+            }
+        });
 
-        buttonGroup_save_position.add(jCheckBox2);
+        buttonGroup_save_position.add(jCheckBox_DOWN_LEFT);
+        jCheckBox_DOWN_LEFT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox_DOWN_LEFTActionPerformed(evt);
+            }
+        });
 
-        buttonGroup_save_position.add(jCheckBox3);
+        buttonGroup_save_position.add(jCheckBox_DOWN_RIGHT);
+        jCheckBox_DOWN_RIGHT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox_DOWN_RIGHTActionPerformed(evt);
+            }
+        });
 
-        buttonGroup_save_position.add(jCheckBox4);
+        buttonGroup_save_position.add(jCheckBox_UP_RIGHT);
+        jCheckBox_UP_RIGHT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox_UP_RIGHTActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Location to display \"saved\" message");
 
@@ -218,35 +243,35 @@ public class Settings extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jCheckBox1)
+                        .addComponent(jCheckBox_UP_LEFT)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(jCheckBox4)
+                        .addComponent(jCheckBox_UP_RIGHT)
                         .addGap(8, 8, 8))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jCheckBox2)
+                .addComponent(jCheckBox_DOWN_LEFT)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jCheckBox3)
+                .addComponent(jCheckBox_DOWN_RIGHT)
                 .addGap(19, 19, 19))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCheckBox1)
-                    .addComponent(jCheckBox4)
+                    .addComponent(jCheckBox_UP_LEFT)
+                    .addComponent(jCheckBox_UP_RIGHT)
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckBox2))
-                    .addComponent(jCheckBox3, javax.swing.GroupLayout.Alignment.TRAILING)))
+                        .addComponent(jCheckBox_DOWN_LEFT))
+                    .addComponent(jCheckBox_DOWN_RIGHT, javax.swing.GroupLayout.Alignment.TRAILING)))
         );
 
         jRadioButton_show_saved_alert.setText("Diplay \"saved\" message on screen");
@@ -329,21 +354,46 @@ public class Settings extends javax.swing.JFrame {
 
     private void jRadioButton_show_saved_alertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton_show_saved_alertActionPerformed
         if (jRadioButton_show_saved_alert.isSelected()) {
-            Static.SHOW_SAVE_MESSAGE_ON_DISPLAY = true;
+            Memory.SHOW_SAVE_MESSAGE_ON_DISPLAY = true;
         } else {
-            Static.SHOW_SAVE_MESSAGE_ON_DISPLAY = false;
+            Memory.SHOW_SAVE_MESSAGE_ON_DISPLAY = false;
         }
     }//GEN-LAST:event_jRadioButton_show_saved_alertActionPerformed
+
+    private void jCheckBox_UP_LEFTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_UP_LEFTActionPerformed
+        Memory.SAVE_MESSAGE_POSITION = "CORNER_UP_LEFT";
+        Memory.run.MESSAGE_SAVED();
+    }//GEN-LAST:event_jCheckBox_UP_LEFTActionPerformed
+
+    private void jCheckBox_CENTERActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_CENTERActionPerformed
+        Memory.SAVE_MESSAGE_POSITION = "CENTER";
+        Memory.run.MESSAGE_SAVED();
+    }//GEN-LAST:event_jCheckBox_CENTERActionPerformed
+
+    private void jCheckBox_UP_RIGHTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_UP_RIGHTActionPerformed
+        Memory.SAVE_MESSAGE_POSITION = "CORNER_UP_RIGHT";
+        Memory.run.MESSAGE_SAVED();
+    }//GEN-LAST:event_jCheckBox_UP_RIGHTActionPerformed
+
+    private void jCheckBox_DOWN_RIGHTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_DOWN_RIGHTActionPerformed
+        Memory.SAVE_MESSAGE_POSITION = "CORNER_DOWN_RIGHT";
+        Memory.run.MESSAGE_SAVED();
+    }//GEN-LAST:event_jCheckBox_DOWN_RIGHTActionPerformed
+
+    private void jCheckBox_DOWN_LEFTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_DOWN_LEFTActionPerformed
+        Memory.SAVE_MESSAGE_POSITION = "CORNER_DOWN_LEFT";
+        Memory.run.MESSAGE_SAVED();
+    }//GEN-LAST:event_jCheckBox_DOWN_LEFTActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup_save_position;
     private javax.swing.JButton jButton_back;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JCheckBox jCheckBox4;
-    private javax.swing.JCheckBox jCheckBox5;
+    private javax.swing.JCheckBox jCheckBox_CENTER;
+    private javax.swing.JCheckBox jCheckBox_DOWN_LEFT;
+    private javax.swing.JCheckBox jCheckBox_DOWN_RIGHT;
+    private javax.swing.JCheckBox jCheckBox_UP_LEFT;
+    private javax.swing.JCheckBox jCheckBox_UP_RIGHT;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -124,11 +124,11 @@
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jCheckBox1" min="-2" max="-2" attributes="0"/>
+                              <Component id="jCheckBox_UP_LEFT" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jCheckBox4" min="-2" max="-2" attributes="0"/>
+                              <Component id="jCheckBox_UP_RIGHT" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                           </Group>
                           <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
@@ -137,9 +137,9 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jCheckBox2" min="-2" max="-2" attributes="0"/>
+                      <Component id="jCheckBox_DOWN_LEFT" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jCheckBox3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jCheckBox_DOWN_RIGHT" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -148,8 +148,8 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jCheckBox1" min="-2" max="-2" attributes="0"/>
-                          <Component id="jCheckBox4" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCheckBox_UP_LEFT" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCheckBox_UP_RIGHT" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel1" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -157,9 +157,9 @@
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jCheckBox2" min="-2" max="-2" attributes="0"/>
+                              <Component id="jCheckBox_DOWN_LEFT" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jCheckBox3" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCheckBox_DOWN_RIGHT" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -192,7 +192,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                                  <Component id="jCheckBox5" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jCheckBox_CENTER" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -207,7 +207,7 @@
                           <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                           <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jCheckBox5" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCheckBox_CENTER" min="-2" max="-2" attributes="0"/>
                           <EmptySpace pref="15" max="32767" attributes="0"/>
                           <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -385,42 +385,57 @@
                     </Component>
                   </SubComponents>
                 </Container>
-                <Component class="javax.swing.JCheckBox" name="jCheckBox5">
+                <Component class="javax.swing.JCheckBox" name="jCheckBox_CENTER">
                   <Properties>
                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                       <ComponentRef name="buttonGroup_save_position"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBox_CENTERActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JCheckBox" name="jCheckBox1">
+            <Component class="javax.swing.JCheckBox" name="jCheckBox_UP_LEFT">
               <Properties>
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="buttonGroup_save_position"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBox_UP_LEFTActionPerformed"/>
+              </Events>
             </Component>
-            <Component class="javax.swing.JCheckBox" name="jCheckBox2">
+            <Component class="javax.swing.JCheckBox" name="jCheckBox_DOWN_LEFT">
               <Properties>
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="buttonGroup_save_position"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBox_DOWN_LEFTActionPerformed"/>
+              </Events>
             </Component>
-            <Component class="javax.swing.JCheckBox" name="jCheckBox3">
+            <Component class="javax.swing.JCheckBox" name="jCheckBox_DOWN_RIGHT">
               <Properties>
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="buttonGroup_save_position"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBox_DOWN_RIGHTActionPerformed"/>
+              </Events>
             </Component>
-            <Component class="javax.swing.JCheckBox" name="jCheckBox4">
+            <Component class="javax.swing.JCheckBox" name="jCheckBox_UP_RIGHT">
               <Properties>
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="buttonGroup_save_position"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBox_UP_RIGHTActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel1">
               <Properties>

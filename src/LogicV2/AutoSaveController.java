@@ -1,4 +1,4 @@
-package logic;
+package LogicV2;
 
 import java.awt.AWTException;
 import java.awt.Robot;
@@ -23,8 +23,8 @@ public class AutoSaveController implements Runnable {
         try {
             while (THREAD_ACTIVATED) {
                 SAVE_OPTION_SELECTION();
-                Static.run.MESSAGE_SAVED();
-                Thread.sleep(Static.TIME_DELAY_TO_SAVE);
+                Memory.run.MESSAGE_SAVED();
+                Thread.sleep(Memory.TIME_DELAY_TO_SAVE);
             }
             System.out.println("Thread " + THREAD_ID + " stopped");
         } catch (InterruptedException e) {
@@ -32,7 +32,7 @@ public class AutoSaveController implements Runnable {
     }
 
     private void SAVE_OPTION_SELECTION() {
-        switch (Static.SAVE_OPTION_TYPE) {
+        switch (Memory.SAVE_OPTION_TYPE) {
             case "CTRL + S":
                 CTRL_PLUS_S();
                 break;
