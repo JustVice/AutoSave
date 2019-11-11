@@ -1,8 +1,11 @@
 package UI;
 
 import LogicV2.Memory;
+import LogicV2.Run;
 
 public class Settings extends javax.swing.JFrame {
+    
+    private int test_room_counter = 0;
 
     public Settings() {
         initComponents();
@@ -63,6 +66,11 @@ public class Settings extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel7.setText("Settings");
+        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel7MouseClicked(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 153));
 
@@ -354,36 +362,44 @@ public class Settings extends javax.swing.JFrame {
 
     private void jRadioButton_show_saved_alertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton_show_saved_alertActionPerformed
         if (jRadioButton_show_saved_alert.isSelected()) {
-            Memory.SHOW_SAVE_MESSAGE_ON_DISPLAY = true;
+            Memory.SHOW_SAVE_MESSAGE = true;
         } else {
-            Memory.SHOW_SAVE_MESSAGE_ON_DISPLAY = false;
+            Memory.SHOW_SAVE_MESSAGE = false;
         }
     }//GEN-LAST:event_jRadioButton_show_saved_alertActionPerformed
 
     private void jCheckBox_UP_LEFTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_UP_LEFTActionPerformed
         Memory.SAVE_MESSAGE_POSITION = "CORNER_UP_LEFT";
-        Memory.run.MESSAGE_SAVED();
+        Run.MESSAGE_SAVED();
     }//GEN-LAST:event_jCheckBox_UP_LEFTActionPerformed
 
     private void jCheckBox_CENTERActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_CENTERActionPerformed
         Memory.SAVE_MESSAGE_POSITION = "CENTER";
-        Memory.run.MESSAGE_SAVED();
+        Run.MESSAGE_SAVED();
     }//GEN-LAST:event_jCheckBox_CENTERActionPerformed
 
     private void jCheckBox_UP_RIGHTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_UP_RIGHTActionPerformed
         Memory.SAVE_MESSAGE_POSITION = "CORNER_UP_RIGHT";
-        Memory.run.MESSAGE_SAVED();
+        Run.MESSAGE_SAVED();
     }//GEN-LAST:event_jCheckBox_UP_RIGHTActionPerformed
 
     private void jCheckBox_DOWN_RIGHTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_DOWN_RIGHTActionPerformed
         Memory.SAVE_MESSAGE_POSITION = "CORNER_DOWN_RIGHT";
-        Memory.run.MESSAGE_SAVED();
+        Run.MESSAGE_SAVED();
     }//GEN-LAST:event_jCheckBox_DOWN_RIGHTActionPerformed
 
     private void jCheckBox_DOWN_LEFTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_DOWN_LEFTActionPerformed
         Memory.SAVE_MESSAGE_POSITION = "CORNER_DOWN_LEFT";
-        Memory.run.MESSAGE_SAVED();
+        Run.MESSAGE_SAVED();
     }//GEN-LAST:event_jCheckBox_DOWN_LEFTActionPerformed
+
+    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
+        this.test_room_counter++;
+        if(this.test_room_counter==8){
+            TestRoom testRoom = new TestRoom();
+            dispose();
+        }
+    }//GEN-LAST:event_jLabel7MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

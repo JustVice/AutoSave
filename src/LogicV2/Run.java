@@ -1,5 +1,6 @@
 package LogicV2;
 
+import UI.MainFrame;
 import UI.saveMessage;
 import java.awt.Desktop;
 import java.awt.Frame;
@@ -17,14 +18,12 @@ import javax.swing.JOptionPane;
 
 public class Run {
 
-    public Run() {
-//        Memory.userDataV2.DATA_CONTROLLER();
-//        MainFrame frame = new MainFrame();
-UserDataV2 u = new UserDataV2();
-u.DATA_CONTROLLER();
+    public static void START_PROGRAM() {
+        Memory.USER_DATA_V2.DATA_PROGRAM_LAUNCH_CONTROLLER();
+        MainFrame frame = new MainFrame();
     }
 
-    public int MILLISECONDS_TIME_CONVERTER(String seconds_string, String minutes_string) {
+    public static int MILLISECONDS_TIME_CONVERTER(String seconds_string, String minutes_string) {
         int seconds = Integer.parseInt(seconds_string);
         int minutes = Integer.parseInt(minutes_string);
         int milliseconds = 0;
@@ -37,13 +36,13 @@ u.DATA_CONTROLLER();
         return milliseconds;
     }
 
-    public void MESSAGE_SAVED() {
-        if (Memory.SHOW_SAVE_MESSAGE_ON_DISPLAY) {
+    public static void MESSAGE_SAVED() {
+        if (Memory.SHOW_SAVE_MESSAGE) {
             saveMessage a = new saveMessage();
         }
     }
 
-    public void open_link(String link) {
+    public static void open_link(String link) {
         if (Desktop.isDesktopSupported()) {
             try {
                 Desktop.getDesktop().browse(new URI(link));
@@ -58,9 +57,10 @@ u.DATA_CONTROLLER();
      *
      * @param type
      * @param message
+     * @param messageType
      * @param title
      */
-    public void message(String message, String title, String messageType) {
+    public static void message(String message, String title, String messageType) {
         switch (messageType) {
             case "Error":/*Error*/
                 JOptionPane.showMessageDialog(null, message, title, 0);
@@ -79,7 +79,7 @@ u.DATA_CONTROLLER();
                 throw new AssertionError();
         }
     }
-    
+
     public static void BuildTxtFile(String path, String txtFileName, String extension, String content) {
         /*"\r\n" to jump between lines*/
         System.out.print("writing...");
@@ -104,7 +104,7 @@ u.DATA_CONTROLLER();
             System.out.println("Error\n" + ex);
         }
     }
-    
+
     public static LinkedList<String> readLines(String pathName) {
         LinkedList<String> listLines = new LinkedList<String>();
         try {
@@ -114,7 +114,7 @@ u.DATA_CONTROLLER();
             while (linea != null) {
                 linea = buffer.readLine();
                 if (linea != null) {
-                    System.out.println(linea);
+//                    System.out.println(linea);
                     listLines.add(linea);
                 }
             }

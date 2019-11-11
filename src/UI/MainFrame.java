@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import LogicV2.Memory;
 import LogicV2.AutoSaveController;
+import LogicV2.Run;
 
 public class MainFrame extends javax.swing.JFrame implements Runnable {
 
@@ -16,6 +17,7 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
     private String THREAD_ACTION = "";
     private final String SECONDS_CONTROLLER = "SECONDS_CONTROLLER";
     private final String MINUTES_CONTROLLER = "MINUTES_CONTROLLER";
+    private final String SAVE_INFO = "SAVE_INFO";
 
     public MainFrame() {
         initComponents();
@@ -44,45 +46,10 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
     }
 
     private void UI_SETTINGS_USERDATA() {
-        //If show_saved_message is true, the show saved alert will be selected
-        //or not.
-        if (Memory.SHOW_SAVE_MESSAGE_ON_DISPLAY) {
-            jRadioButton_show_saved_alert.setSelected(true);
-        } else {
-            jRadioButton_show_saved_alert.setSelected(false);
-        }
-
-        //Display saved message switch
-        if (Memory.data.getUserData().isShowSavedMessage()) {
-            jRadioButton_show_saved_alert.setSelected(true);
-            Memory.SHOW_SAVE_MESSAGE_ON_DISPLAY = true;
-        } else {
-            jRadioButton_show_saved_alert.setSelected(false);
-            Memory.SHOW_SAVE_MESSAGE_ON_DISPLAY = false;
-        }
-    }
-
-    //Updates the values inside the User Data and writes it inside the .txt 
-    //user data file.
-    private void SAVE_USER_DATA() {
-        //If CTRL + S is selected, "S" will be saved inside the savePrefix
-        //value.
-//        if (jRadioButton_CTRL_and_S.isSelected()) {
-//            Static.data.getUserData().setSavePrefix("S");
-//        } else {
-//            //If CTRL + G is selected, "G" will be saved inside the savePrefix
-//            //value.
-//            Static.data.getUserData().setSavePrefix("G");
-//        }
-        //If combobox show saved alert is selected showSavedMessage on User Data
-        //will be updated.
-        if (jRadioButton_show_saved_alert.isSelected()) {
-            Memory.data.getUserData().setShowSavedMessage(true);
-        } else {
-            Memory.data.getUserData().setShowSavedMessage(false);
-        }
-        //Updates the info of the .txt file.
-        Memory.data.updateInfo();
+        this.jTextField_seconds.setText(Memory.USER_DATA_V2.getSeconds());
+        this.jTextField_minutes.setText(Memory.USER_DATA_V2.getMinutes());
+        this.jComboBox_save_option.setSelectedItem(Memory.USER_DATA_V2.getSave_type());
+        this.jRadioButton_show_saved_alert.setSelected(Memory.USER_DATA_V2.getShow_save_message().equals("true"));
     }
 
     private void CHANGE_START_STOP_BUTTON_TEXT(String STATUS) {
@@ -445,18 +412,17 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
 
     private boolean SECURITY_NO_LESS_THAN_1_SECOND_DELAY() {
         if (Memory.TIME_DELAY_TO_SAVE > 1000) {
-            System.out.println("true");
             return true;
         } else {
             System.out.println("AutoSave stopped due security 1 second protocole.");
             String message = "For security reasons, you can't set a save delay of 1 second or less.";
-            Memory.run.message(message, "No less than 1 second", "Alert");
+            Run.message(message, "No less than 1 second", "Alert");
             return false;
         }
     }
 
     private boolean IS_DELAY_OVER_10SECONDS() {
-        int DELAY_BEFORE_SAVE = Memory.run.MILLISECONDS_TIME_CONVERTER(jTextField_seconds.getText(),
+        int DELAY_BEFORE_SAVE = Run.MILLISECONDS_TIME_CONVERTER(jTextField_seconds.getText(),
                 jTextField_minutes.getText());
         return DELAY_BEFORE_SAVE > 10000;
     }
@@ -478,12 +444,21 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
     private void SET_DELAY_TIME_TO_SAVE() {
         String seconds = this.jTextField_seconds.getText();
         String minutes = this.jTextField_minutes.getText();
-        Memory.TIME_DELAY_TO_SAVE = Memory.run.MILLISECONDS_TIME_CONVERTER(seconds, minutes);
+        Memory.TIME_DELAY_TO_SAVE = Run.MILLISECONDS_TIME_CONVERTER(seconds, minutes);
     }
 
     private void SET_SAVE_TYPE() {
         System.out.println("Save type setled to: " + this.jComboBox_save_option.getSelectedItem().toString());
         Memory.SAVE_OPTION_TYPE = this.jComboBox_save_option.getSelectedItem().toString();
+        UPDATE_USER_DATA_INFO();
+    }
+
+    private void UPDATE_USER_DATA_INFO() {
+        Memory.USER_DATA_V2.UPDATE_DATA(this.jTextField_seconds.getText(),
+                this.jTextField_minutes.getText(),
+                this.jComboBox_save_option.getSelectedItem().toString(),
+                this.jRadioButton_show_saved_alert.isSelected() + "",
+                Memory.SAVE_MESSAGE_POSITION);
     }
 
     private void jButton_START_AUTO_SAVEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_START_AUTO_SAVEActionPerformed
@@ -492,28 +467,28 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
 
     private void jRadioButton_show_saved_alertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton_show_saved_alertActionPerformed
         if (jRadioButton_show_saved_alert.isSelected()) {
-            Memory.SHOW_SAVE_MESSAGE_ON_DISPLAY = true;
-            SAVE_USER_DATA();
+            Memory.SHOW_SAVE_MESSAGE = true;
+            UPDATE_USER_DATA_INFO();
         } else {
-            Memory.SHOW_SAVE_MESSAGE_ON_DISPLAY = false;
-            SAVE_USER_DATA();
+            Memory.SHOW_SAVE_MESSAGE = false;
+            UPDATE_USER_DATA_INFO();
         }
     }//GEN-LAST:event_jRadioButton_show_saved_alertActionPerformed
 
     private void twitterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_twitterMouseClicked
-        Memory.run.open_link("https://justvice.github.io/s/twitter");
+        Run.open_link("https://justvice.github.io/s/twitter");
     }//GEN-LAST:event_twitterMouseClicked
 
     private void GithubMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GithubMouseClicked
-        Memory.run.open_link("https://justvice.github.io/s/github-repos");
+        Run.open_link("https://justvice.github.io/s/github-repos");
     }//GEN-LAST:event_GithubMouseClicked
 
     private void alllinksMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_alllinksMouseClicked
-        Memory.run.open_link("https://justvice.github.io/s/links");
+        Run.open_link("https://justvice.github.io/s/links");
     }//GEN-LAST:event_alllinksMouseClicked
 
     private void jlabe_webpageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlabe_webpageMouseClicked
-        Memory.run.open_link("https://justvice.github.io");
+        Run.open_link("https://justvice.github.io");
     }//GEN-LAST:event_jlabe_webpageMouseClicked
 
     private void jTextField_secondsKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_secondsKeyTyped
@@ -535,8 +510,13 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
         Thread thread = new Thread(this);
         this.THREAD_ACTION = this.SECONDS_CONTROLLER;
         thread.start();
+        
+        Thread t = new Thread(this);
+        this.THREAD_ACTION = this.SAVE_INFO;
+        t.start();
 
         //PLACES NUMBER TYPED.
+//        UPDATE_USER_DATA_INFO();
     }//GEN-LAST:event_jTextField_secondsKeyTyped
 
     private void jTextField_minutesKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_minutesKeyTyped
@@ -558,8 +538,13 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
         Thread thread = new Thread(this);
         this.THREAD_ACTION = this.MINUTES_CONTROLLER;
         thread.start();
+        
+        Thread t = new Thread(this);
+        this.THREAD_ACTION = this.SAVE_INFO;
+        t.start();
 
         //PLACES NUMBER TYPED.
+//        UPDATE_USER_DATA_INFO();
     }//GEN-LAST:event_jTextField_minutesKeyTyped
 
     private void jTextField_minutesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_minutesKeyReleased
@@ -598,6 +583,13 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
                         this.jTextField_minutes.setText("5760");
                         jTextField_minutes.setCaretPosition(jTextField_minutes.getDocument().getLength());
                     }
+                } catch (InterruptedException | NumberFormatException e) {
+                }
+                break;
+                case "SAVE_INFO":
+                try {
+                    Thread.sleep(90);
+                        UPDATE_USER_DATA_INFO();
                 } catch (InterruptedException | NumberFormatException e) {
                 }
                 break;

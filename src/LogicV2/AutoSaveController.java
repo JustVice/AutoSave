@@ -23,7 +23,7 @@ public class AutoSaveController implements Runnable {
         try {
             while (THREAD_ACTIVATED) {
                 SAVE_OPTION_SELECTION();
-                Memory.run.MESSAGE_SAVED();
+                Run.MESSAGE_SAVED();
                 Thread.sleep(Memory.TIME_DELAY_TO_SAVE);
             }
             System.out.println("Thread " + THREAD_ID + " stopped");
