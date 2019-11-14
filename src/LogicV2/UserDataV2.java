@@ -41,6 +41,9 @@ public class UserDataV2 {
         Memory.SAVE_OPTION_TYPE = this.save_type;
         Memory.SHOW_SAVE_MESSAGE = this.show_save_message.equals("true");
         Memory.SAVE_MESSAGE_POSITION = this.save_message_position;
+        Memory.SECONDS = Integer.parseInt(this.seconds);
+        Memory.MINUTES = Integer.parseInt(this.minutes);
+        
     }
 
     private void CHECK_DATA_TXT_FILE() {

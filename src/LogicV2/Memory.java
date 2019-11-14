@@ -28,6 +28,8 @@ public class Memory {
     //USER DATA VARIABLES
     public static String DATA_PATH_V2 = DataFolderPath + "\\USER_DATA_V2.txt";
     public static UserDataV2 USER_DATA_V2 = new UserDataV2();
+    public static int SECONDS = 0;
+    public static int MINUTES = 2;
     public static int TIME_DELAY_TO_SAVE = 10000;
     public static String SAVE_OPTION_TYPE = "CTRL + S";
     public static boolean SHOW_SAVE_MESSAGE = true;

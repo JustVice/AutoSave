@@ -4,12 +4,13 @@ import LogicV2.Memory;
 import LogicV2.Run;
 
 public class Settings extends javax.swing.JFrame {
-    
+
     private int test_room_counter = 0;
 
     public Settings() {
         initComponents();
         UI_SETTINGS();
+        UI_USER_INFO_SETTINGS();
     }
 
     private void UI_SETTINGS() {
@@ -23,6 +24,38 @@ public class Settings extends javax.swing.JFrame {
         setTitle(Memory.title + " " + Memory.version);
         //Sets the icon image.
         setIconImage(Memory.getIconImage());
+    }
+
+    private void UI_USER_INFO_SETTINGS() {
+        switch (Memory.SAVE_MESSAGE_POSITION) {
+            case "CORNER_UP_LEFT":
+                jCheckBox_UP_LEFT.setSelected(true);
+                break;
+            case "CORNER_UP_RIGHT":
+                jCheckBox_UP_RIGHT.setSelected(true);
+                break;
+            case "CORNER_DOWN_LEFT":
+                jCheckBox_DOWN_LEFT.setSelected(true);
+                break;
+            case "CORNER_DOWN_RIGHT":
+                jCheckBox_DOWN_RIGHT.setSelected(true);
+                break;
+            case "CENTER":
+                jCheckBox_CENTER.setSelected(true);
+                break;
+            default:
+                throw new AssertionError();
+        }
+        jRadioButton_show_saved_alert.setSelected(Memory.SHOW_SAVE_MESSAGE);
+        ENABLE_DISABLE_SAVE_MESSAGE_POSITION_CHECKBOXES(jRadioButton_show_saved_alert.isSelected());
+    }
+
+    private void ENABLE_DISABLE_SAVE_MESSAGE_POSITION_CHECKBOXES(boolean status) {
+        jCheckBox_UP_LEFT.setSelected(status);
+        jCheckBox_UP_RIGHT.setSelected(status);
+        jCheckBox_DOWN_LEFT.setSelected(status);
+        jCheckBox_DOWN_RIGHT.setSelected(status);
+        jCheckBox_CENTER.setSelected(status);
     }
 
     @SuppressWarnings("unchecked")
@@ -363,44 +396,76 @@ public class Settings extends javax.swing.JFrame {
     private void jRadioButton_show_saved_alertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton_show_saved_alertActionPerformed
         if (jRadioButton_show_saved_alert.isSelected()) {
             Memory.SHOW_SAVE_MESSAGE = true;
+            UPDATE_USER_DATA_INFO();
         } else {
             Memory.SHOW_SAVE_MESSAGE = false;
+            UPDATE_USER_DATA_INFO();
         }
     }//GEN-LAST:event_jRadioButton_show_saved_alertActionPerformed
 
     private void jCheckBox_UP_LEFTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_UP_LEFTActionPerformed
         Memory.SAVE_MESSAGE_POSITION = "CORNER_UP_LEFT";
         Run.MESSAGE_SAVED();
+        UPDATE_USER_DATA_INFO();
     }//GEN-LAST:event_jCheckBox_UP_LEFTActionPerformed
 
     private void jCheckBox_CENTERActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_CENTERActionPerformed
         Memory.SAVE_MESSAGE_POSITION = "CENTER";
         Run.MESSAGE_SAVED();
+        UPDATE_USER_DATA_INFO();
     }//GEN-LAST:event_jCheckBox_CENTERActionPerformed
 
     private void jCheckBox_UP_RIGHTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_UP_RIGHTActionPerformed
         Memory.SAVE_MESSAGE_POSITION = "CORNER_UP_RIGHT";
         Run.MESSAGE_SAVED();
+        UPDATE_USER_DATA_INFO();
     }//GEN-LAST:event_jCheckBox_UP_RIGHTActionPerformed
 
     private void jCheckBox_DOWN_RIGHTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_DOWN_RIGHTActionPerformed
         Memory.SAVE_MESSAGE_POSITION = "CORNER_DOWN_RIGHT";
         Run.MESSAGE_SAVED();
+        UPDATE_USER_DATA_INFO();
     }//GEN-LAST:event_jCheckBox_DOWN_RIGHTActionPerformed
 
     private void jCheckBox_DOWN_LEFTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_DOWN_LEFTActionPerformed
         Memory.SAVE_MESSAGE_POSITION = "CORNER_DOWN_LEFT";
         Run.MESSAGE_SAVED();
+        UPDATE_USER_DATA_INFO();
     }//GEN-LAST:event_jCheckBox_DOWN_LEFTActionPerformed
+
 
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
         this.test_room_counter++;
-        if(this.test_room_counter==8){
+        if (this.test_room_counter == 8) {
             TestRoom testRoom = new TestRoom();
             dispose();
         }
     }//GEN-LAST:event_jLabel7MouseClicked
 
+    private void UPDATE_USER_DATA_INFO() {
+        Memory.USER_DATA_V2.UPDATE_DATA(Memory.SECONDS + "",
+                Memory.MINUTES + "",
+                Memory.SAVE_OPTION_TYPE,
+                this.jRadioButton_show_saved_alert.isSelected() + "",
+                RETURN_SAVE_MESSAGE_POSITION());
+    }
+
+    private String RETURN_SAVE_MESSAGE_POSITION() {
+        if (jCheckBox_CENTER.isSelected()) {
+            return "CENTER";
+        } else if (jCheckBox_DOWN_LEFT.isSelected()) {
+            return "CORNER_DOWN_LEFT";
+        } else if (jCheckBox_DOWN_RIGHT.isSelected()) {
+            return "CORNER_DOWN_RIGHT";
+        } else if (jCheckBox_UP_LEFT.isSelected()) {
+            return "CORNER_UP_LEFT";
+        } else if (jCheckBox_UP_RIGHT.isSelected()) {
+            return "CORNER_UP_RIGHT";
+        } else {
+            return "CORNER_DOWN_LEFT";
+        }
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup_save_position;

@@ -49,7 +49,7 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
         this.jTextField_seconds.setText(Memory.USER_DATA_V2.getSeconds());
         this.jTextField_minutes.setText(Memory.USER_DATA_V2.getMinutes());
         this.jComboBox_save_option.setSelectedItem(Memory.USER_DATA_V2.getSave_type());
-        this.jRadioButton_show_saved_alert.setSelected(Memory.USER_DATA_V2.getShow_save_message().equals("true"));
+        this.jRadioButton_show_saved_alert.setSelected(Memory.SHOW_SAVE_MESSAGE);
     }
 
     private void CHANGE_START_STOP_BUTTON_TEXT(String STATUS) {
@@ -118,6 +118,8 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
         jlabe_webpage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
 
         jButton_START_AUTO_SAVE.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton_START_AUTO_SAVE.setText("START/STOP");
@@ -212,19 +214,17 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel_days)
-                            .addComponent(jButton_START_AUTO_SAVE, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
-                            .addComponent(jRadioButton_show_saved_alert)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox_save_option, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap(27, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel_days)
+                        .addComponent(jButton_START_AUTO_SAVE, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+                        .addComponent(jRadioButton_show_saved_alert)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jComboBox_save_option, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel_settings)
-                        .addGap(35, 35, 35))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 150, Short.MAX_VALUE)
+                        .addComponent(jLabel_settings)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -243,7 +243,7 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
                 .addComponent(jLabel_days)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton_START_AUTO_SAVE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Main", jPanel1);
@@ -350,13 +350,13 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 11, Short.MAX_VALUE))
+                .addGap(0, 22, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("About", jPanel2);
@@ -459,6 +459,8 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
                 this.jComboBox_save_option.getSelectedItem().toString(),
                 this.jRadioButton_show_saved_alert.isSelected() + "",
                 Memory.SAVE_MESSAGE_POSITION);
+        Memory.MINUTES = Integer.parseInt(this.jTextField_minutes.getText());
+        Memory.SECONDS = Integer.parseInt(this.jTextField_seconds.getText());
     }
 
     private void jButton_START_AUTO_SAVEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_START_AUTO_SAVEActionPerformed
@@ -510,7 +512,7 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
         Thread thread = new Thread(this);
         this.THREAD_ACTION = this.SECONDS_CONTROLLER;
         thread.start();
-        
+
         Thread t = new Thread(this);
         this.THREAD_ACTION = this.SAVE_INFO;
         t.start();
@@ -538,7 +540,7 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
         Thread thread = new Thread(this);
         this.THREAD_ACTION = this.MINUTES_CONTROLLER;
         thread.start();
-        
+
         Thread t = new Thread(this);
         this.THREAD_ACTION = this.SAVE_INFO;
         t.start();
@@ -571,6 +573,7 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
                         //SETS TEXT TO 60. MOVES CURSOR TO THE END OF THE JTEXTFIELD.
                         this.jTextField_seconds.setText("60");
                         jTextField_seconds.setCaretPosition(jTextField_seconds.getDocument().getLength());
+                        Memory.SECONDS = 60;
                     }
                 } catch (InterruptedException | NumberFormatException e) {
                 }
@@ -582,14 +585,15 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
                         //SETS TEXT TO 4320. MOVES CURSOR TO THE END OF THE JTEXTFIELD.
                         this.jTextField_minutes.setText("5760");
                         jTextField_minutes.setCaretPosition(jTextField_minutes.getDocument().getLength());
+                        Memory.MINUTES = 5760;
                     }
                 } catch (InterruptedException | NumberFormatException e) {
                 }
                 break;
-                case "SAVE_INFO":
+            case "SAVE_INFO":
                 try {
                     Thread.sleep(90);
-                        UPDATE_USER_DATA_INFO();
+                    UPDATE_USER_DATA_INFO();
                 } catch (InterruptedException | NumberFormatException e) {
                 }
                 break;
