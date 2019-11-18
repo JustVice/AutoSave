@@ -39,8 +39,8 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
     }
 
     private void UI_SETTINGS_USERDATA() {
-        this.jTextField_seconds.setText(Memory.SECONDS+"");
-        this.jTextField_minutes.setText(Memory.MINUTES+"");
+        this.jTextField_seconds.setText(Memory.SECONDS + "");
+        this.jTextField_minutes.setText(Memory.MINUTES + "");
         this.jComboBox_save_option.setSelectedItem(Memory.SAVE_OPTION_TYPE);
         this.jRadioButton_show_saved_alert.setSelected(Memory.SHOW_SAVE_MESSAGE);
         JCOMBOBOX_SAVE_IS_FIRST_OPTION_SELECTED_CONTROLLER();
@@ -77,9 +77,9 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
         jLabel2 = new javax.swing.JLabel();
         sec = new javax.swing.JLabel();
         jTextField_seconds = new javax.swing.JTextField();
-        jLabel_settings = new javax.swing.JLabel();
         jLabel_title = new javax.swing.JLabel();
         jLabel_auto_save_working = new javax.swing.JLabel();
+        jButton_open_settings = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -105,7 +105,7 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
         });
 
         jRadioButton_show_saved_alert.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jRadioButton_show_saved_alert.setText("Display saved message");
+        jRadioButton_show_saved_alert.setText("Display \"saved\" message");
         jRadioButton_show_saved_alert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioButton_show_saved_alertActionPerformed(evt);
@@ -170,17 +170,17 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
                     .addComponent(jLabel2)))
         );
 
-        jLabel_settings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/icons8_settings_50px_1.png"))); // NOI18N
-        jLabel_settings.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel_settingsMouseClicked(evt);
-            }
-        });
-
         jLabel_title.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel_title.setText("Auto Save");
 
         jLabel_auto_save_working.setText("Auto save working...");
+
+        jButton_open_settings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/icons8_settings_50px_1.png"))); // NOI18N
+        jButton_open_settings.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_open_settingsActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -191,8 +191,8 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(63, 63, 63)
                         .addComponent(jLabel_title)
-                        .addGap(45, 45, 45)
-                        .addComponent(jLabel_settings))
+                        .addGap(39, 39, 39)
+                        .addComponent(jButton_open_settings, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel5Layout.createSequentialGroup()
                             .addGap(10, 10, 10)
@@ -217,13 +217,14 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel_title)
-                    .addComponent(jLabel_settings))
-                .addGap(11, 11, 11)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel_title))
+                    .addComponent(jButton_open_settings, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
                 .addComponent(jLabel1_save_option)
-                .addGap(6, 6, 6)
+                .addGap(9, 9, 9)
                 .addComponent(jComboBox_save_option, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(7, 7, 7)
                 .addComponent(jRadioButton_show_saved_alert)
@@ -413,6 +414,7 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
     private void START_AUTO_SAVE() {
         JCOMBOBOX_SAVE_DATA();
         TEXT_FIELDS_ENABLE_DISABLE(false);
+        this.jButton_open_settings.setEnabled(false);
         this.AUTO_SAVE_CONTROLLER = new AutoSaveController();
         this.AUTO_SAVE_CONTROLLER.startWorking();
         this.IS_AUTO_SAVE_WORKING = true;
@@ -423,6 +425,7 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
 
     private void STOP_AUTO_SAVE() {
         TEXT_FIELDS_ENABLE_DISABLE(true);
+        this.jButton_open_settings.setEnabled(true);
         this.AUTO_SAVE_CONTROLLER.setThreadActivated(false);
         this.IS_AUTO_SAVE_WORKING = false;
         CHANGE_START_STOP_BUTTON_TEXT(START_BUTTON_TEXT);
@@ -548,12 +551,6 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
         thread.start();
     }//GEN-LAST:event_jTextField_minutesKeyTyped
 
-    private void jLabel_settingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_settingsMouseClicked
-        System.out.println("Settings window opened.");
-        Settings settings = new Settings();
-        dispose();
-    }//GEN-LAST:event_jLabel_settingsMouseClicked
-
     // <editor-fold desc="JCombobox_save_type info">
     //JComboBox_save_option has a chaotic behavior. To fix this, there are some
     //variables to handle this.
@@ -607,10 +604,18 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         this.cont++;
         if (cont >= 2) {
-            Run.open_link("https://dl.dropboxusercontent.com/s/pp14jdinb1096j9/room.png?dl=0");
+            Run.open_link("https://dl.dropboxusercontent.com/s/utdn6wsv5m9925x/room.png?dl=0");
             this.cont = 0;
         }
     }//GEN-LAST:event_jLabel3MouseClicked
+
+    private void jButton_open_settingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_open_settingsActionPerformed
+        if (!this.IS_AUTO_SAVE_WORKING) {
+            System.out.println("Settings window opened.");
+            Settings settings = new Settings();
+            this.dispose();
+        }
+    }//GEN-LAST:event_jButton_open_settingsActionPerformed
 
     private void JCOMBOBOX_SAVE_DATA_CONTROLLER() {
         JCOMBOBOX_RESTRICT_SAVE_INFO_WHEN_PROGRAM_IS_LAUNCHED_COUNTER_CONTROLLER++;
@@ -652,6 +657,8 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
                     Thread.sleep(100);
                     UPDATE_USER_DATA_INFO();
                 } catch (InterruptedException | NumberFormatException e) {
+                    System.out.println("Error, letter is inside jTextField seconds. Setled to 0.");
+                    this.jTextField_seconds.setText("0");
                 }
                 break;
             case "MINUTES_CONTROLLER":
@@ -664,11 +671,13 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
                         Memory.MINUTES = 5760;
                     }
                     if (Integer.parseInt(jTextField_minutes.getText()) == 4654) {
-                    jLabel1_save_option.setText("Inki wasnt here...?");
+                        jLabel1_save_option.setText("Inki wasnt here...?");
                     }
                     Thread.sleep(100);
                     UPDATE_USER_DATA_INFO();
                 } catch (InterruptedException | NumberFormatException e) {
+                    System.out.println("Error, letter is inside jTextField minutes. Setled to 2.");
+                    this.jTextField_minutes.setText("2");
                 }
                 break;
             case "SAVE_INFO":
@@ -684,6 +693,7 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
     private javax.swing.JLabel Github;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton_START_AUTO_SAVE;
+    private javax.swing.JButton jButton_open_settings;
     private javax.swing.JComboBox<String> jComboBox_save_option;
     private javax.swing.JLabel jLabel1_save_option;
     private javax.swing.JLabel jLabel2;
@@ -693,7 +703,6 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel_auto_save_working;
-    private javax.swing.JLabel jLabel_settings;
     private javax.swing.JLabel jLabel_title;
     private javax.swing.JLabel jLabel_vice_page;
     private javax.swing.JPanel jPanel1;
