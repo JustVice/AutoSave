@@ -19,8 +19,16 @@ import javax.swing.JOptionPane;
 public class Run {
 
     public static void START_PROGRAM() {
+        console_launch_personalized_message();
         Memory.USER_DATA_V2.DATA_PROGRAM_LAUNCH_CONTROLLER();
         MainFrame frame = new MainFrame();
+    }
+
+    public static void console_launch_personalized_message() {
+        System.out.println("/////////////////////////");
+        String message = "-.AUTOSAVE BY JUST VICE.-";
+        System.out.println(message);
+        System.out.println("/////////////////////////");
     }
 
     public static int MILLISECONDS_TIME_CONVERTER(String seconds_string, String minutes_string) {
@@ -82,7 +90,7 @@ public class Run {
 
     public static void BuildTxtFile(String path, String txtFileName, String extension, String content) {
         /*"\r\n" to jump between lines*/
-        System.out.print("writing...");
+        System.out.print("saving data...");
         File file;
         if (!path.equals("here")) {
             file = new File(path + "\\" + txtFileName + extension);

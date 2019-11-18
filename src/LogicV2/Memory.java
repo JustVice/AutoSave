@@ -30,6 +30,7 @@ public class Memory {
     public static UserDataV2 USER_DATA_V2 = new UserDataV2();
     public static int SECONDS = 0;
     public static int MINUTES = 2;
+    //Variable TIME_DELAY_TO_SAVE is not saved inside the external data file.
     public static int TIME_DELAY_TO_SAVE = 10000;
     public static String SAVE_OPTION_TYPE = "CTRL + S";
     public static boolean SHOW_SAVE_MESSAGE = true;
@@ -37,6 +38,6 @@ public class Memory {
 
     //Sets the logo of the program.
     public static Image getIconImage() {
-        return Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("IMG/iconLogov2.png"));
+        return Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("IMG/iconLogov2_1.png"));
     }
 }

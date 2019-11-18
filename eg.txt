@@ -1,2 +1,0 @@
-Easter Egg #1: if you type 4654 inside the minutes text field, a message will be displayed.
-Easter Egg #2: 

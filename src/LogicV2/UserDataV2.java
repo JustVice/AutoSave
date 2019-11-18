@@ -15,8 +15,8 @@ public class UserDataV2 {
         CHECK_GLOBAL_FOLDER();
         CHECK_PROGRAM_DATA_FOLDER();
         CHECK_DATA_TXT_FILE();
-        LOAD_DATA();
-        LOAD_DATA_IN_MEMORY();
+        LOAD_DATA_FROM_DATA_FILE();
+        SET_DATA_IN_MEMORY();
     }
 
     public void UPDATE_DATA(String seconds,
@@ -25,25 +25,40 @@ public class UserDataV2 {
             String show_save_message,
             String save_message_position) {
         DATA_FILE_CONTENT_UPDATE(seconds, minutes, save_type, show_save_message, save_message_position);
-        System.out.println("User Data updated.");
     }
 
-    private void LOAD_DATA() {
-        LinkedList<String> data_lines = Run.readLines(Memory.DataFolderPath + "\\USER_DATA_V2");
-        this.seconds = GET_VARIABLE_VALUE(data_lines.get(0));
-        this.minutes = GET_VARIABLE_VALUE(data_lines.get(1));
-        this.save_type = GET_VARIABLE_VALUE(data_lines.get(2));
-        this.show_save_message = GET_VARIABLE_VALUE(data_lines.get(3));
-        this.save_message_position = GET_VARIABLE_VALUE(data_lines.get(4));
+    private void LOAD_DATA_FROM_DATA_FILE() {
+        try {
+            LinkedList<String> data_lines = Run.readLines(Memory.DataFolderPath + "\\USER_DATA_V2");
+            this.seconds = GET_VARIABLE_VALUE(data_lines.get(0));
+            this.minutes = GET_VARIABLE_VALUE(data_lines.get(1));
+            this.save_type = GET_VARIABLE_VALUE(data_lines.get(2));
+            this.show_save_message = GET_VARIABLE_VALUE(data_lines.get(3));
+            this.save_message_position = GET_VARIABLE_VALUE(data_lines.get(4));
+        } catch (Exception e) {
+            ERROR();
+        }
     }
 
-    private void LOAD_DATA_IN_MEMORY() {
-        Memory.SAVE_OPTION_TYPE = this.save_type;
-        Memory.SHOW_SAVE_MESSAGE = this.show_save_message.equals("true");
-        Memory.SAVE_MESSAGE_POSITION = this.save_message_position;
-        Memory.SECONDS = Integer.parseInt(this.seconds);
-        Memory.MINUTES = Integer.parseInt(this.minutes);
-        
+    private void SET_DATA_IN_MEMORY() {
+        try {
+            Memory.SAVE_OPTION_TYPE = this.save_type;
+            Memory.SHOW_SAVE_MESSAGE = this.show_save_message.equals("true");
+            Memory.SAVE_MESSAGE_POSITION = this.save_message_position;
+            if (Integer.parseInt(this.seconds) <= 60) {
+                Memory.SECONDS = Integer.parseInt(this.seconds);
+            } else {
+                Memory.SECONDS = 60;
+            }
+            if (Integer.parseInt(this.minutes) <= 5760) {
+                Memory.MINUTES = Integer.parseInt(this.minutes);
+            } else {
+                Memory.MINUTES = 5760;
+            }
+            System.out.println("Data loaded correctly.");
+        } catch (Exception e) {
+            ERROR();
+        }
     }
 
     private void CHECK_DATA_TXT_FILE() {
@@ -107,16 +122,37 @@ public class UserDataV2 {
     }
 
     private String GET_VARIABLE_VALUE(String line) {
-        StringBuilder sb = new StringBuilder(line);
-        while (true) {
-            if (sb.charAt(0) != '=') {
-                sb.deleteCharAt(0);
-            } else {
-                sb.deleteCharAt(0);
-                break;
+        try {
+            StringBuilder sb = new StringBuilder(line);
+            while (true) {
+                if (sb.charAt(0) != '=') {
+                    sb.deleteCharAt(0);
+                } else {
+                    sb.deleteCharAt(0);
+                    break;
+                }
             }
+            return sb.toString();
+        } catch (Exception e) {
+            ERROR();
+            return null;
         }
-        return sb.toString();
+    }
+
+    private void ERROR() {
+        String message = "Error trying to load data.\n"
+                + "Please, re-open the program. The problem should be solved.\n\n"
+                + "Error 001: The data file is corrupted. The content of the data\nfile was"
+                + " edited manually. If the problem persists delete manually at: \nAppdata "
+                + "- Roaming - Just Vice - AutoSave - USER_DATA_V2.txt";
+        Run.message(message, "ERROR 001", "Error");
+        DELETE_USER_DATA_FILE();
+        System.exit(0);
+    }
+
+    private void DELETE_USER_DATA_FILE() {
+        File file = new File(Memory.DATA_PATH_V2);
+        file.delete();
     }
 
     // <editor-fold desc="Get and set">

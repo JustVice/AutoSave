@@ -236,7 +236,7 @@ public class AutoSaveController implements Runnable {
             Robot robot = new Robot();
             robot.keyPress(KeyEvent.VK_F12);
             robot.keyRelease(KeyEvent.VK_F12);
-            System.out.println("Saved. F. Thread ID: " + THREAD_ID);
+            System.out.println("Saved. F12. Thread ID: " + THREAD_ID);
         } catch (AWTException ex) {
         }
     }

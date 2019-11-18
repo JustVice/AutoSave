@@ -8,6 +8,7 @@ public class Settings extends javax.swing.JFrame {
     private int test_room_counter = 0;
 
     public Settings() {
+        setIconImage(Memory.getIconImage());
         initComponents();
         UI_SETTINGS();
         UI_USER_INFO_SETTINGS();
@@ -22,11 +23,11 @@ public class Settings extends javax.swing.JFrame {
         setResizable(false);
         //Sets status bar info.
         setTitle(Memory.title + " " + Memory.version);
-        //Sets the icon image.
-        setIconImage(Memory.getIconImage());
     }
 
     private void UI_USER_INFO_SETTINGS() {
+        jRadioButton_show_saved_alert.setSelected(Memory.SHOW_SAVE_MESSAGE);
+        ENABLE_DISABLE_SAVE_MESSAGE_POSITION_CHECKBOXES(Memory.SHOW_SAVE_MESSAGE);
         switch (Memory.SAVE_MESSAGE_POSITION) {
             case "CORNER_UP_LEFT":
                 jCheckBox_UP_LEFT.setSelected(true);
@@ -44,18 +45,41 @@ public class Settings extends javax.swing.JFrame {
                 jCheckBox_CENTER.setSelected(true);
                 break;
             default:
-                throw new AssertionError();
+                jCheckBox_UP_LEFT.setSelected(true);
+                UPDATE_USER_DATA_INFO();
         }
-        jRadioButton_show_saved_alert.setSelected(Memory.SHOW_SAVE_MESSAGE);
-        ENABLE_DISABLE_SAVE_MESSAGE_POSITION_CHECKBOXES(jRadioButton_show_saved_alert.isSelected());
     }
 
     private void ENABLE_DISABLE_SAVE_MESSAGE_POSITION_CHECKBOXES(boolean status) {
-        jCheckBox_UP_LEFT.setSelected(status);
-        jCheckBox_UP_RIGHT.setSelected(status);
-        jCheckBox_DOWN_LEFT.setSelected(status);
-        jCheckBox_DOWN_RIGHT.setSelected(status);
-        jCheckBox_CENTER.setSelected(status);
+        jCheckBox_UP_LEFT.setEnabled(status);
+        jCheckBox_UP_RIGHT.setEnabled(status);
+        jCheckBox_DOWN_LEFT.setEnabled(status);
+        jCheckBox_DOWN_RIGHT.setEnabled(status);
+        jCheckBox_CENTER.setEnabled(status);
+    }
+    
+    private void UPDATE_USER_DATA_INFO() {
+        Memory.USER_DATA_V2.UPDATE_DATA(Memory.SECONDS + "",
+                Memory.MINUTES + "",
+                Memory.SAVE_OPTION_TYPE,
+                this.jRadioButton_show_saved_alert.isSelected() + "",
+                RETURN_SAVE_MESSAGE_POSITION());
+    }
+
+    private String RETURN_SAVE_MESSAGE_POSITION() {
+        if (jCheckBox_CENTER.isSelected()) {
+            return "CENTER";
+        } else if (jCheckBox_DOWN_LEFT.isSelected()) {
+            return "CORNER_DOWN_LEFT";
+        } else if (jCheckBox_DOWN_RIGHT.isSelected()) {
+            return "CORNER_DOWN_RIGHT";
+        } else if (jCheckBox_UP_LEFT.isSelected()) {
+            return "CORNER_UP_LEFT";
+        } else if (jCheckBox_UP_RIGHT.isSelected()) {
+            return "CORNER_UP_RIGHT";
+        } else {
+            return "CORNER_DOWN_LEFT";
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -388,17 +412,19 @@ public class Settings extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_backActionPerformed
-        System.out.println("Opening Main Frame");
+        System.out.println("Main window opened.");
         MainFrame mainFrame = new MainFrame();
-        dispose();
+        this.dispose();
     }//GEN-LAST:event_jButton_backActionPerformed
 
     private void jRadioButton_show_saved_alertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton_show_saved_alertActionPerformed
         if (jRadioButton_show_saved_alert.isSelected()) {
             Memory.SHOW_SAVE_MESSAGE = true;
+            ENABLE_DISABLE_SAVE_MESSAGE_POSITION_CHECKBOXES(true);
             UPDATE_USER_DATA_INFO();
         } else {
             Memory.SHOW_SAVE_MESSAGE = false;
+            ENABLE_DISABLE_SAVE_MESSAGE_POSITION_CHECKBOXES(false);
             UPDATE_USER_DATA_INFO();
         }
     }//GEN-LAST:event_jRadioButton_show_saved_alertActionPerformed
@@ -433,7 +459,6 @@ public class Settings extends javax.swing.JFrame {
         UPDATE_USER_DATA_INFO();
     }//GEN-LAST:event_jCheckBox_DOWN_LEFTActionPerformed
 
-
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
         this.test_room_counter++;
         if (this.test_room_counter == 8) {
@@ -441,31 +466,6 @@ public class Settings extends javax.swing.JFrame {
             dispose();
         }
     }//GEN-LAST:event_jLabel7MouseClicked
-
-    private void UPDATE_USER_DATA_INFO() {
-        Memory.USER_DATA_V2.UPDATE_DATA(Memory.SECONDS + "",
-                Memory.MINUTES + "",
-                Memory.SAVE_OPTION_TYPE,
-                this.jRadioButton_show_saved_alert.isSelected() + "",
-                RETURN_SAVE_MESSAGE_POSITION());
-    }
-
-    private String RETURN_SAVE_MESSAGE_POSITION() {
-        if (jCheckBox_CENTER.isSelected()) {
-            return "CENTER";
-        } else if (jCheckBox_DOWN_LEFT.isSelected()) {
-            return "CORNER_DOWN_LEFT";
-        } else if (jCheckBox_DOWN_RIGHT.isSelected()) {
-            return "CORNER_DOWN_RIGHT";
-        } else if (jCheckBox_UP_LEFT.isSelected()) {
-            return "CORNER_UP_LEFT";
-        } else if (jCheckBox_UP_RIGHT.isSelected()) {
-            return "CORNER_UP_RIGHT";
-        } else {
-            return "CORNER_DOWN_LEFT";
-        }
-
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup_save_position;

@@ -39,10 +39,10 @@ public class saveMessage extends javax.swing.JFrame implements Runnable {
                 this.setLocation(width-90, 0);
                 break;
             case "CORNER_DOWN_LEFT":
-                this.setLocation(0, height-50);
+                this.setLocation(0, height-94);
                 break;
             case "CORNER_DOWN_RIGHT":
-                this.setLocation(width-90, height-50);
+                this.setLocation(width-90, height-94);
                 break;
             case "CENTER":
                 this.setLocationRelativeTo(null);
