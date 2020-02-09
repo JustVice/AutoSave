@@ -42,6 +42,9 @@ public class AutoSaveController implements Runnable {
             case "CTRL + A":
                 CTRL_PLUS_A();
                 break;
+                case "CTRL + Shift + S":
+                CTRL_SHIFT_S();
+                break;
             case "F1":
                 F1();
                 break;
@@ -113,9 +116,26 @@ public class AutoSaveController implements Runnable {
     private void CTRL_PLUS_A() {
         try {
             Robot robot = new Robot();
+            robot.keyPress(KeyEvent.VK_CONTROL);
             robot.keyPress(KeyEvent.VK_A);
             robot.keyRelease(KeyEvent.VK_A);
+            robot.keyRelease(KeyEvent.VK_CONTROL);
             System.out.println("Saved. CTRL + A. Thread ID: " + THREAD_ID);
+        } catch (AWTException ex) {
+
+        }
+    }
+    
+    private void CTRL_SHIFT_S() {
+        try {
+            Robot robot = new Robot();
+            robot.keyPress(KeyEvent.VK_CONTROL);
+            robot.keyPress(KeyEvent.VK_SHIFT);
+            robot.keyPress(KeyEvent.VK_S);
+            robot.keyRelease(KeyEvent.VK_CONTROL);
+            robot.keyRelease(KeyEvent.VK_SHIFT);
+            robot.keyRelease(KeyEvent.VK_S);
+            System.out.println("Saved. CTRL + SHIFT + S. Thread ID: " + THREAD_ID);
         } catch (AWTException ex) {
 
         }

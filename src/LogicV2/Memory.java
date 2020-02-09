@@ -8,7 +8,7 @@ public class Memory {
 
     // <editor-fold desc="Data folder">
     //Program title. Version.
-    public static String title = "AutoSave", version = "1.2";
+    public static String title = "AutoSave", version = "1.3";
     //Static Run object.
 //    public static Run run;
     //Folder where the data will be saved.

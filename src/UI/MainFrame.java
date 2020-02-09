@@ -116,7 +116,7 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
         jLabel1_save_option.setText("Save option");
 
         jComboBox_save_option.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jComboBox_save_option.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CTRL + S", "CTRL + G", "CTRL + A", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12" }));
+        jComboBox_save_option.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CTRL + S", "CTRL + G", "CTRL + A", "CTRL + Shift + S", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12" }));
         jComboBox_save_option.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox_save_optionItemStateChanged(evt);
@@ -418,7 +418,7 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
         this.AUTO_SAVE_CONTROLLER = new AutoSaveController();
         this.AUTO_SAVE_CONTROLLER.startWorking();
         this.IS_AUTO_SAVE_WORKING = true;
-        CHANGE_START_STOP_BUTTON_TEXT(STOP_BUTTON_TEXT);
+        CHANGE_START_STOP_BUTTON_TEXT(this.STOP_BUTTON_TEXT);
         jLabel_auto_save_working.setVisible(true);
         System.out.println("Auto save working.");
     }

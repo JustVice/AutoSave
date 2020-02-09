@@ -182,22 +182,23 @@
                       <Font name="Arial" size="14" style="1"/>
                     </Property>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="15">
+                      <StringArray count="16">
                         <StringItem index="0" value="CTRL + S"/>
                         <StringItem index="1" value="CTRL + G"/>
                         <StringItem index="2" value="CTRL + A"/>
-                        <StringItem index="3" value="F1"/>
-                        <StringItem index="4" value="F2"/>
-                        <StringItem index="5" value="F3"/>
-                        <StringItem index="6" value="F4"/>
-                        <StringItem index="7" value="F5"/>
-                        <StringItem index="8" value="F6"/>
-                        <StringItem index="9" value="F7"/>
-                        <StringItem index="10" value="F8"/>
-                        <StringItem index="11" value="F9"/>
-                        <StringItem index="12" value="F10"/>
-                        <StringItem index="13" value="F11"/>
-                        <StringItem index="14" value="F12"/>
+                        <StringItem index="3" value="CTRL + Shift + S"/>
+                        <StringItem index="4" value="F1"/>
+                        <StringItem index="5" value="F2"/>
+                        <StringItem index="6" value="F3"/>
+                        <StringItem index="7" value="F4"/>
+                        <StringItem index="8" value="F5"/>
+                        <StringItem index="9" value="F6"/>
+                        <StringItem index="10" value="F7"/>
+                        <StringItem index="11" value="F8"/>
+                        <StringItem index="12" value="F9"/>
+                        <StringItem index="13" value="F10"/>
+                        <StringItem index="14" value="F11"/>
+                        <StringItem index="15" value="F12"/>
                       </StringArray>
                     </Property>
                   </Properties>
