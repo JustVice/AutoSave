@@ -22,9 +22,11 @@ public class AutoSaveController implements Runnable {
     public void run() {
         try {
             while (THREAD_ACTIVATED) {
-                SAVE_OPTION_SELECTION();
-                Tasks.MESSAGE_SAVED();
                 Thread.sleep(Memory.TIME_DELAY_TO_SAVE);
+                if (THREAD_ACTIVATED) {
+                    SAVE_OPTION_SELECTION();
+                    Tasks.MESSAGE_SAVED();
+                }
             }
             System.out.println("Thread " + THREAD_ID + " stopped");
         } catch (InterruptedException e) {
@@ -42,7 +44,7 @@ public class AutoSaveController implements Runnable {
             case "CTRL + A":
                 CTRL_PLUS_A();
                 break;
-                case "CTRL + Shift + S":
+            case "CTRL + Shift + S":
                 CTRL_SHIFT_S();
                 break;
             case "F1":
@@ -112,7 +114,7 @@ public class AutoSaveController implements Runnable {
 
         }
     }
-    
+
     private void CTRL_PLUS_A() {
         try {
             Robot robot = new Robot();
@@ -125,7 +127,7 @@ public class AutoSaveController implements Runnable {
 
         }
     }
-    
+
     private void CTRL_SHIFT_S() {
         try {
             Robot robot = new Robot();
@@ -262,7 +264,6 @@ public class AutoSaveController implements Runnable {
     }
 
     // </editor-fold>
-    
     public boolean isThreadActivated() {
         return THREAD_ACTIVATED;
     }

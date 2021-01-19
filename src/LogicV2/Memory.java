@@ -9,7 +9,7 @@ public class Memory {
     // Data file name
     public static String dataFileName = "USER_DATA_V2.txt";
     //Program title. Version.
-    public static String title = "AutoSave", version = "1.3.1";
+    public static String title = "AutoSave", version = "1.3.2";
     //Folder where the data txt file will be saved.
     public static String folderForDataName = "AutoSave";
     //Global Just Vice's data folder name.
