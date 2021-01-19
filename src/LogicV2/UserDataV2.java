@@ -4,7 +4,8 @@ import java.io.File;
 import java.util.LinkedList;
 
 public class UserDataV2 {
-
+    
+    // 2021 VICE review: Excellent work VICE from the past I'm actually impressed.
     private String seconds;
     private String minutes;
     private String save_type;
@@ -26,10 +27,25 @@ public class UserDataV2 {
             String save_message_position) {
         DATA_FILE_CONTENT_UPDATE(seconds, minutes, save_type, show_save_message, save_message_position);
     }
+    
+    private void DATA_FILE_CONTENT_UPDATE(String seconds,
+            String minutes,
+            String save_type,
+            String show_save_message,
+            String save_message_position) {
+        String content = "seconds=" + seconds + "\r\n"
+                + "minutes=" + minutes + "\r\n"
+                + "save_type=" + save_type + "\r\n"
+                + "show_save_message=" + show_save_message + "\r\n"
+                + "save_message_position=" + save_message_position + "\r\n";
+        String data_path_to_update = Memory.DataFolderPath;
+        Tasks.BuildTxtFile(data_path_to_update, "USER_DATA_V2", ".txt", content);
+    }
 
+    // Loads user data from txt file.
     private void LOAD_DATA_FROM_DATA_FILE() {
         try {
-            LinkedList<String> data_lines = Run.readLines(Memory.DataFolderPath + "\\USER_DATA_V2");
+            LinkedList<String> data_lines = Tasks.readLines(Memory.DataFolderPath + "\\USER_DATA_V2");
             this.seconds = GET_VARIABLE_VALUE(data_lines.get(0));
             this.minutes = GET_VARIABLE_VALUE(data_lines.get(1));
             this.save_type = GET_VARIABLE_VALUE(data_lines.get(2));
@@ -40,6 +56,7 @@ public class UserDataV2 {
         }
     }
 
+    // Sets user data on memory.
     private void SET_DATA_IN_MEMORY() {
         try {
             Memory.SAVE_OPTION_TYPE = this.save_type;
@@ -61,13 +78,14 @@ public class UserDataV2 {
         }
     }
 
+    // Checks for data txt file. If does not exist, creates it.
     private void CHECK_DATA_TXT_FILE() {
         String data_path = Memory.DATA_PATH_V2;
         File file = new File(data_path);
         if (!file.exists()) {
             String content = DATA_FILE_CONTENT();
             String data_path_to_create = Memory.DataFolderPath;
-            Run.BuildTxtFile(data_path_to_create, "USER_DATA_V2", ".txt", content);
+            Tasks.BuildTxtFile(data_path_to_create, "USER_DATA_V2", ".txt", content);
             System.out.println("Data txt file created");
         } else {
             System.out.println("Data txt file found.");
@@ -83,20 +101,7 @@ public class UserDataV2 {
         return content;
     }
 
-    private void DATA_FILE_CONTENT_UPDATE(String seconds,
-            String minutes,
-            String save_type,
-            String show_save_message,
-            String save_message_position) {
-        String content = "seconds=" + seconds + "\r\n"
-                + "minutes=" + minutes + "\r\n"
-                + "save_type=" + save_type + "\r\n"
-                + "show_save_message=" + show_save_message + "\r\n"
-                + "save_message_position=" + save_message_position + "\r\n";
-        String data_path_to_update = Memory.DataFolderPath;
-        Run.BuildTxtFile(data_path_to_update, "USER_DATA_V2", ".txt", content);
-    }
-
+    // Checks for global appdata folder. If does not exist, creates it.
     private void CHECK_GLOBAL_FOLDER() {
         String path = Memory.globalFolderForDataPath;
         File file = new File(path);
@@ -109,6 +114,7 @@ public class UserDataV2 {
         }
     }
 
+    // Checks for AutoSave appdata folder. If does not exist, creates it.
     private void CHECK_PROGRAM_DATA_FOLDER() {
         String path = Memory.DataFolderPath;
         File file = new File(path);
@@ -145,7 +151,7 @@ public class UserDataV2 {
                 + "Error 001: The data file is corrupted. The content of the data\nfile was"
                 + " edited manually. If the problem persists delete manually at: \nAppdata "
                 + "- Roaming - Just Vice - AutoSave - USER_DATA_V2.txt";
-        Run.message(message, "ERROR 001", "Error");
+        Tasks.message(message, "ERROR 001", "Error");
         DELETE_USER_DATA_FILE();
         System.exit(0);
     }

@@ -16,7 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-public class Run {
+public class Tasks {
 
     public static void START_PROGRAM() {
         console_launch_personalized_message();
@@ -31,6 +31,13 @@ public class Run {
         System.out.println("/////////////////////////");
     }
 
+    /**
+     * Converts expressed minutes and seconds into milliseconds int expression.
+     * @param seconds_string Seconds set.
+     * @param minutes_string Minutes set.
+     * @return int - milliseconds expression calculated out of given minutes and seconds
+     * expression.
+     */
     public static int MILLISECONDS_TIME_CONVERTER(String seconds_string, String minutes_string) {
         int seconds = Integer.parseInt(seconds_string);
         int minutes = Integer.parseInt(minutes_string);
@@ -44,16 +51,18 @@ public class Run {
         return milliseconds;
     }
 
+    // Shows "Saved" message.
     public static void MESSAGE_SAVED() {
         if (Memory.SHOW_SAVE_MESSAGE) {
             saveMessage a = new saveMessage();
         }
     }
 
-    public static void open_link(String link) {
+    // Opens an Internet url given.
+    public static void open_link(String url) {
         if (Desktop.isDesktopSupported()) {
             try {
-                Desktop.getDesktop().browse(new URI(link));
+                Desktop.getDesktop().browse(new URI(url));
             } catch (URISyntaxException | IOException ex) {
                 Logger.getLogger(Frame.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -122,17 +131,14 @@ public class Run {
             while (linea != null) {
                 linea = buffer.readLine();
                 if (linea != null) {
-//                    System.out.println(linea);
                     listLines.add(linea);
                 }
             }
             entrada.close();
             buffer.close();
-//            System.out.println("");
         } catch (IOException ex) {
             System.out.println("File does not exist.\n");
         }
         return listLines;
     }
-
 }

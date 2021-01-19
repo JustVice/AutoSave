@@ -1,0 +1,4 @@
+If you press 3 times the VICE face on about, a pic of my room will be opened.
+If you click 7 times the word Settings at the Settings form, it will open the TestRoom.
+Type 4654 inside minutes text field
+???

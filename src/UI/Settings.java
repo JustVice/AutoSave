@@ -1,7 +1,7 @@
 package UI;
 
 import LogicV2.Memory;
-import LogicV2.Run;
+import LogicV2.Tasks;
 
 public class Settings extends javax.swing.JFrame {
 
@@ -431,31 +431,31 @@ public class Settings extends javax.swing.JFrame {
 
     private void jCheckBox_UP_LEFTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_UP_LEFTActionPerformed
         Memory.SAVE_MESSAGE_POSITION = "CORNER_UP_LEFT";
-        Run.MESSAGE_SAVED();
+        Tasks.MESSAGE_SAVED();
         UPDATE_USER_DATA_INFO();
     }//GEN-LAST:event_jCheckBox_UP_LEFTActionPerformed
 
     private void jCheckBox_CENTERActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_CENTERActionPerformed
         Memory.SAVE_MESSAGE_POSITION = "CENTER";
-        Run.MESSAGE_SAVED();
+        Tasks.MESSAGE_SAVED();
         UPDATE_USER_DATA_INFO();
     }//GEN-LAST:event_jCheckBox_CENTERActionPerformed
 
     private void jCheckBox_UP_RIGHTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_UP_RIGHTActionPerformed
         Memory.SAVE_MESSAGE_POSITION = "CORNER_UP_RIGHT";
-        Run.MESSAGE_SAVED();
+        Tasks.MESSAGE_SAVED();
         UPDATE_USER_DATA_INFO();
     }//GEN-LAST:event_jCheckBox_UP_RIGHTActionPerformed
 
     private void jCheckBox_DOWN_RIGHTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_DOWN_RIGHTActionPerformed
         Memory.SAVE_MESSAGE_POSITION = "CORNER_DOWN_RIGHT";
-        Run.MESSAGE_SAVED();
+        Tasks.MESSAGE_SAVED();
         UPDATE_USER_DATA_INFO();
     }//GEN-LAST:event_jCheckBox_DOWN_RIGHTActionPerformed
 
     private void jCheckBox_DOWN_LEFTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_DOWN_LEFTActionPerformed
         Memory.SAVE_MESSAGE_POSITION = "CORNER_DOWN_LEFT";
-        Run.MESSAGE_SAVED();
+        Tasks.MESSAGE_SAVED();
         UPDATE_USER_DATA_INFO();
     }//GEN-LAST:event_jCheckBox_DOWN_LEFTActionPerformed
 

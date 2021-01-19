@@ -4,7 +4,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import LogicV2.Memory;
 import LogicV2.AutoSaveController;
-import LogicV2.Run;
+import LogicV2.Tasks;
 
 public class MainFrame extends javax.swing.JFrame implements Runnable {
 
@@ -29,35 +29,43 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
         //Prevents user to resize the window.
         setResizable(false);
         //Sets status bar info.
-        setTitle(Memory.title + " " + Memory.version);
+        setTitle(Memory.version);
     }
 
     private void UI_SETTINGS() {
-        this.jComboBox_save_option.setSelectedItem(true);
+        jComboBox_save_option.setSelectedItem(true);
         CHANGE_START_STOP_BUTTON_TEXT(START_BUTTON_TEXT);
         jLabel_auto_save_working.setVisible(false);
     }
 
+    // Seconds and minutes variables where set when data was loaded. This happened
+    // at Tasks.java START_PROGRAM();
     private void UI_SETTINGS_USERDATA() {
-        this.jTextField_seconds.setText(Memory.SECONDS + "");
-        this.jTextField_minutes.setText(Memory.MINUTES + "");
-        this.jComboBox_save_option.setSelectedItem(Memory.SAVE_OPTION_TYPE);
-        this.jRadioButton_show_saved_alert.setSelected(Memory.SHOW_SAVE_MESSAGE);
+        jTextField_seconds.setText(Memory.SECONDS + "");
+        jTextField_minutes.setText(Memory.MINUTES + "");
+        jComboBox_save_option.setSelectedItem(Memory.SAVE_OPTION_TYPE);
+        jRadioButton_show_saved_alert.setSelected(Memory.SHOW_SAVE_MESSAGE);
         JCOMBOBOX_SAVE_IS_FIRST_OPTION_SELECTED_CONTROLLER();
     }
 
-    private void CHANGE_START_STOP_BUTTON_TEXT(String STATUS) {
-        this.jButton_START_AUTO_SAVE.setText(STATUS);
+    private void CHANGE_START_STOP_BUTTON_TEXT(String text) {
+        jButton_START_AUTO_SAVE.setText(text);
     }
 
-    private void ABLE_DISABLE_TEXT_FIELDS(boolean STATUS) {
-        this.jTextField_minutes.setEnabled(STATUS);
-        this.jTextField_seconds.setEnabled(STATUS);
+    private void ENABLE_DISABLE_TEXT_FIELDS(boolean STATUS) {
+        jTextField_minutes.setEnabled(STATUS);
+        jTextField_seconds.setEnabled(STATUS);
     }
 
-    private void TEXT_FIELDS_ENABLE_DISABLE(boolean status) {
-        this.jTextField_minutes.setEnabled(status);
-        this.jTextField_seconds.setEnabled(status);
+    // Updates user data when changes are done.
+    private void UPDATE_USER_DATA_INFO() {
+        Memory.MINUTES = Integer.parseInt(this.jTextField_minutes.getText());
+        Memory.SECONDS = Integer.parseInt(this.jTextField_seconds.getText());
+        Memory.USER_DATA_V2.UPDATE_DATA(this.jTextField_seconds.getText(),
+                jTextField_minutes.getText(),
+                jComboBox_save_option.getSelectedItem().toString(),
+                jRadioButton_show_saved_alert.isSelected() + "",
+                Memory.SAVE_MESSAGE_POSITION);
     }
 
     @SuppressWarnings("unchecked")
@@ -91,6 +99,7 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
         jLabel_vice_page = new javax.swing.JLabel();
         jlabe_autosave_page = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -305,6 +314,8 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel8.setText("click any");
 
+        jLabel1.setText("MIT LICENSE");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -325,6 +336,10 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
                             .addComponent(jlabe_autosave_page, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel_vice_page, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(23, 23, 23))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -338,7 +353,7 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(137, Short.MAX_VALUE)
+                .addContainerGap(140, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(jLabel8))
@@ -350,7 +365,9 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Github, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlabe_autosave_page, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addGap(5, 5, 5))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel3Layout.createSequentialGroup()
                     .addContainerGap()
@@ -359,7 +376,7 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jLabel3)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(97, Short.MAX_VALUE)))
+                    .addContainerGap(114, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -374,8 +391,8 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 15, Short.MAX_VALUE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("About", jPanel2);
@@ -388,11 +405,15 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton_START_AUTO_SAVEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_START_AUTO_SAVEActionPerformed
+        AUTO_SAVE_CONTROLLER();
+    }//GEN-LAST:event_jButton_START_AUTO_SAVEActionPerformed
 
     private void AUTO_SAVE_CONTROLLER() {
         SET_DELAY_TIME_TO_SAVE();
@@ -411,26 +432,10 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
         }
     }
 
-    private void START_AUTO_SAVE() {
-        JCOMBOBOX_SAVE_DATA();
-        TEXT_FIELDS_ENABLE_DISABLE(false);
-        this.jButton_open_settings.setEnabled(false);
-        this.AUTO_SAVE_CONTROLLER = new AutoSaveController();
-        this.AUTO_SAVE_CONTROLLER.startWorking();
-        this.IS_AUTO_SAVE_WORKING = true;
-        CHANGE_START_STOP_BUTTON_TEXT(this.STOP_BUTTON_TEXT);
-        jLabel_auto_save_working.setVisible(true);
-        System.out.println("Auto save working.");
-    }
-
-    private void STOP_AUTO_SAVE() {
-        TEXT_FIELDS_ENABLE_DISABLE(true);
-        this.jButton_open_settings.setEnabled(true);
-        this.AUTO_SAVE_CONTROLLER.setThreadActivated(false);
-        this.IS_AUTO_SAVE_WORKING = false;
-        CHANGE_START_STOP_BUTTON_TEXT(START_BUTTON_TEXT);
-        jLabel_auto_save_working.setVisible(false);
-        System.out.println("Auto save stopped.");
+    private void SET_DELAY_TIME_TO_SAVE() {
+        String seconds = this.jTextField_seconds.getText();
+        String minutes = this.jTextField_minutes.getText();
+        Memory.TIME_DELAY_TO_SAVE = Tasks.MILLISECONDS_TIME_CONVERTER(seconds, minutes);
     }
 
     private boolean SECURITY_NO_LESS_THAN_1_SECOND_DELAY() {
@@ -439,15 +444,27 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
         } else {
             System.out.println("AutoSave stopped due security 1 second protocole.");
             String message = "For security reasons, you can't set a save delay of 1 second or less.";
-            Run.message(message, "No less than 1 second", "Alert");
+            Tasks.message(message, "No less than 1 second", "Alert");
             return false;
         }
     }
 
     private boolean IS_DELAY_OVER_10SECONDS() {
-        int DELAY_BEFORE_SAVE = Run.MILLISECONDS_TIME_CONVERTER(jTextField_seconds.getText(),
+        int DELAY_BEFORE_SAVE = Tasks.MILLISECONDS_TIME_CONVERTER(jTextField_seconds.getText(),
                 jTextField_minutes.getText());
         return DELAY_BEFORE_SAVE > 10000;
+    }
+
+    private void START_AUTO_SAVE() {
+        JCOMBOBOX_SAVE_DATA();
+        ENABLE_DISABLE_TEXT_FIELDS(false);
+        jButton_open_settings.setEnabled(false);
+        AUTO_SAVE_CONTROLLER = new AutoSaveController();
+        AUTO_SAVE_CONTROLLER.startThread();
+        IS_AUTO_SAVE_WORKING = true;
+        CHANGE_START_STOP_BUTTON_TEXT(STOP_BUTTON_TEXT);
+        jLabel_auto_save_working.setVisible(true);
+        System.out.println("Auto save working.");
     }
 
     private boolean CONTINUE_WITH_DELAY_UNDER_10SECONDS() {
@@ -464,27 +481,18 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
         }
     }
 
-    private void SET_DELAY_TIME_TO_SAVE() {
-        String seconds = this.jTextField_seconds.getText();
-        String minutes = this.jTextField_minutes.getText();
-        Memory.TIME_DELAY_TO_SAVE = Run.MILLISECONDS_TIME_CONVERTER(seconds, minutes);
+    private void STOP_AUTO_SAVE() {
+        ENABLE_DISABLE_TEXT_FIELDS(true);
+        jButton_open_settings.setEnabled(true);
+        AUTO_SAVE_CONTROLLER.setThreadActivated(false);
+        IS_AUTO_SAVE_WORKING = false;
+        CHANGE_START_STOP_BUTTON_TEXT(START_BUTTON_TEXT);
+        jLabel_auto_save_working.setVisible(false);
+        System.out.println("Auto save stopped.");
     }
-
-    private void UPDATE_USER_DATA_INFO() {
-        Memory.MINUTES = Integer.parseInt(this.jTextField_minutes.getText());
-        Memory.SECONDS = Integer.parseInt(this.jTextField_seconds.getText());
-        Memory.USER_DATA_V2.UPDATE_DATA(this.jTextField_seconds.getText(),
-                this.jTextField_minutes.getText(),
-                this.jComboBox_save_option.getSelectedItem().toString(),
-                this.jRadioButton_show_saved_alert.isSelected() + "",
-                Memory.SAVE_MESSAGE_POSITION);
-    }
-
-    private void jButton_START_AUTO_SAVEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_START_AUTO_SAVEActionPerformed
-        AUTO_SAVE_CONTROLLER();
-    }//GEN-LAST:event_jButton_START_AUTO_SAVEActionPerformed
 
     private void jRadioButton_show_saved_alertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton_show_saved_alertActionPerformed
+        // Updates user data when pressed.
         if (jRadioButton_show_saved_alert.isSelected()) {
             Memory.SHOW_SAVE_MESSAGE = true;
             UPDATE_USER_DATA_INFO();
@@ -495,27 +503,30 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
     }//GEN-LAST:event_jRadioButton_show_saved_alertActionPerformed
 
     private void twitterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_twitterMouseClicked
-        Run.open_link("https://justvice.github.io/s/twitter");
+        Tasks.open_link("https://justvice.github.io/s/twitter");
     }//GEN-LAST:event_twitterMouseClicked
 
     private void GithubMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GithubMouseClicked
-        Run.open_link("https://justvice.github.io/s/github-repos");
+        Tasks.open_link("https://github.com/justvice/autosave");
     }//GEN-LAST:event_GithubMouseClicked
 
     private void jLabel_vice_pageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_vice_pageMouseClicked
-        Run.open_link("https://justvice.github.io/");
+        Tasks.open_link("https://justvice.github.io/");
     }//GEN-LAST:event_jLabel_vice_pageMouseClicked
 
     private void jlabe_autosave_pageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlabe_autosave_pageMouseClicked
-        Run.open_link("https://justvice.github.io/h/technology/java/auto-save/");
+        Tasks.open_link("https://justvice.github.io/technology/java/auto-save/");
     }//GEN-LAST:event_jlabe_autosave_pageMouseClicked
 
     private void jTextField_secondsKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_secondsKeyTyped
         char c = evt.getKeyChar();
+        
+        // Deletes inserted character if it's not a number, it's space, textfield length is 2
         if (!(Character.isDigit(c)) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE || jTextField_seconds.getText().length() == 2) {
             evt.consume();
         }
 
+        // Sets 0 to textfield if equels to ""
         if (jTextField_seconds.getText().equals("")) {
             jTextField_seconds.setText("0");
         } else {
@@ -525,17 +536,22 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
             }
         }
 
+        //Controls if the seconds text field has a number over 60 then puts cursor to end of string.
+        // Saves user data at the end.
         Thread thread = new Thread(this);
-        this.THREAD_ACTION = this.SECONDS_CONTROLLER;
+        THREAD_ACTION = SECONDS_CONTROLLER;
         thread.start();
     }//GEN-LAST:event_jTextField_secondsKeyTyped
 
     private void jTextField_minutesKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_minutesKeyTyped
         char c = evt.getKeyChar();
+        
+        // Deletes inserted character if it's not a number, it's space, textfield length is 4
         if (!(Character.isDigit(c)) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE || jTextField_minutes.getText().length() == 4) {
             evt.consume();
         }
 
+        // Sets 0 to textfield if equels to ""
         if (jTextField_minutes.getText().equals("")) {
             jTextField_minutes.setText("0");
         } else {
@@ -545,11 +561,32 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
             }
         }
 
-        //Controls if the seconds text field has a number over 60.
+        //Controls if the minutes text field has a number over 5760 then puts cursor to end of string.
+        // Saves user data at the end.
         Thread thread = new Thread(this);
         this.THREAD_ACTION = this.MINUTES_CONTROLLER;
         thread.start();
     }//GEN-LAST:event_jTextField_minutesKeyTyped
+
+    private void jComboBox_save_optionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox_save_optionItemStateChanged
+        JCOMBOBOX_SAVE_DATA_CONTROLLER();
+    }//GEN-LAST:event_jComboBox_save_optionItemStateChanged
+    private int cont = 0;
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        this.cont++;
+        if (cont >= 2) {
+            Tasks.open_link("https://dl.dropboxusercontent.com/s/utdn6wsv5m9925x/room.png?dl=0");
+            this.cont = 0;
+        }
+    }//GEN-LAST:event_jLabel3MouseClicked
+
+    private void jButton_open_settingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_open_settingsActionPerformed
+        if (!this.IS_AUTO_SAVE_WORKING) {
+            System.out.println("Settings window opened.");
+            Settings settings = new Settings();
+            this.dispose();
+        }
+    }//GEN-LAST:event_jButton_open_settingsActionPerformed
 
     // <editor-fold desc="JCombobox_save_type info">
     //JComboBox_save_option has a chaotic behavior. To fix this, there are some
@@ -559,9 +596,9 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
     //
     //JCOMBOBOX_RESTRICT_SAVE_INFO_WHEN_PROGRAM_IS_LAUNCHED_COUNTER_CONTROLLER info:
     //When the program is launched, if there is a different option selected rather
-    //than the first one, the optionItemStateChanged will be triggered 2 times.
+    //than the first one, the optionItemStateChanged event will be triggered 2 times.
     //to control this, the stated above variable will count when those two actions
-    //are performed and restrict the application to save.
+    //are performed and restricts the application to save.
     //
     //JCOMBOBOX_RESTRICT_SAVE_INFO_WHEN_PROGRAM_IS_LAUNCHED_BOOLEAN_CONTROLLER info:
     //When the counter equals 2, this boolean variable will be true. When the variable
@@ -573,13 +610,13 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
     //As stated above, the optionItemStateChanged event is always triggered two times
     //resulting in saving info two times. This should not happen. To handle this,
     //the variable will restric to save to times if its value is not 2. When the
-    //optionItemStateChanged is triggered, the variable is 0, then is equals to 1,
-    //because it is not 2 the save method will not be called. The second time the 
-    //optionItemStateChanged is triggered, the variable will be setled as 2. Because
-    //it is now 2 the save method will be called. Then the value will be 0 again.
+    //optionItemStateChanged event is triggered, the variable is 0, then is equals to 1.
+    //Because it is not 2, the save method will not be called. The second time the 
+    //optionItemStateChanged event is triggered, the variable will be setled as 2. Because
+    //it is now 2, the save method will be called. Then the value will be 0 again.
     //
     //Method JCOMBOBOX_SAVE_IS_FIRST_OPTION_SELECTED_CONTROLLER info:
-    //If the first option of the combobox is selected, the optionItemStateChanged
+    //If the first option of the combobox is selected, the optionItemStateChanged event
     //will not be triggered when the program starts. Therefore, the 
     //JCOMBOBOX_RESTRICT_SAVE_INFO_WHEN_PROGRAM_IS_LAUNCHED_COUNTER_CONTROLLER and
     //JCOMBOBOX_RESTRICT_SAVE_INFO_WHEN_PROGRAM_IS_LAUNCHED_BOOLEAN_CONTROLLER become
@@ -596,27 +633,7 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
             this.JCOMBOBOX_RESTRICT_SAVE_INFO_WHEN_PROGRAM_IS_LAUNCHED_BOOLEAN_CONTROLLER = true;
         }
     }
-
-    private void jComboBox_save_optionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox_save_optionItemStateChanged
-        JCOMBOBOX_SAVE_DATA_CONTROLLER();
-    }//GEN-LAST:event_jComboBox_save_optionItemStateChanged
-    private int cont = 0;
-    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
-        this.cont++;
-        if (cont >= 2) {
-            Run.open_link("https://dl.dropboxusercontent.com/s/utdn6wsv5m9925x/room.png?dl=0");
-            this.cont = 0;
-        }
-    }//GEN-LAST:event_jLabel3MouseClicked
-
-    private void jButton_open_settingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_open_settingsActionPerformed
-        if (!this.IS_AUTO_SAVE_WORKING) {
-            System.out.println("Settings window opened.");
-            Settings settings = new Settings();
-            this.dispose();
-        }
-    }//GEN-LAST:event_jButton_open_settingsActionPerformed
-
+    
     private void JCOMBOBOX_SAVE_DATA_CONTROLLER() {
         JCOMBOBOX_RESTRICT_SAVE_INFO_WHEN_PROGRAM_IS_LAUNCHED_COUNTER_CONTROLLER++;
         if (this.JCOMBOBOX_RESTRICT_SAVE_INFO_WHEN_PROGRAM_IS_LAUNCHED_BOOLEAN_CONTROLLER) {
@@ -637,52 +654,50 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
         UPDATE_USER_DATA_INFO();
     }
 
-    //THREAD CONTROLLER - DIFFERENT THREAD ACTIONS TO PERFORM.
+    //THREAD CONTROLLER - DIFFERENT THREAD ACTIONS TO PERFORM depending of what we pass to the
+    // THREAD_ACTION variable.
     private String THREAD_ACTION = "";
     private final String SECONDS_CONTROLLER = "SECONDS_CONTROLLER";
     private final String MINUTES_CONTROLLER = "MINUTES_CONTROLLER";
 
     @Override
     public void run() {
-        switch (this.THREAD_ACTION) {
+        switch (THREAD_ACTION) {
+            //SETS TEXT TO 60 if higher. MOVES CURSOR TO THE END OF THE JTEXTFIELD. Saves user data.
             case "SECONDS_CONTROLLER":
                 try {
-                    Thread.sleep(70);
-                    if (Integer.parseInt(jTextField_seconds.getText()) > 60) {
-                        //SETS TEXT TO 60 if higher. MOVES CURSOR TO THE END OF THE JTEXTFIELD.
-                        this.jTextField_seconds.setText("60");
-                        jTextField_seconds.setCaretPosition(jTextField_seconds.getDocument().getLength());
-                        Memory.SECONDS = 60;
-                    }
-                    Thread.sleep(100);
-                    UPDATE_USER_DATA_INFO();
-                } catch (InterruptedException | NumberFormatException e) {
-                    System.out.println("Error, letter is inside jTextField seconds. Setled to 0.");
-                    this.jTextField_seconds.setText("0");
+                Thread.sleep(70);
+                if (Integer.parseInt(jTextField_seconds.getText()) > 60) {
+                    this.jTextField_seconds.setText("60");
+                    jTextField_seconds.setCaretPosition(jTextField_seconds.getDocument().getLength());
+                    Memory.SECONDS = 60;
                 }
-                break;
+                Thread.sleep(100);
+                UPDATE_USER_DATA_INFO();
+            } catch (InterruptedException | NumberFormatException e) {
+                System.out.println("Error, letter is inside jTextField seconds. Setled to 0.");
+                this.jTextField_seconds.setText("0");
+            }
+            break;
+            //SETS TEXT TO 5760 if higher. MOVES CURSOR TO THE END OF THE JTEXTFIELD. Saves user data.
             case "MINUTES_CONTROLLER":
                 try {
-                    Thread.sleep(70);
-                    if (Integer.parseInt(jTextField_minutes.getText()) > 5760) {
-                        //SETS TEXT TO 5760 if higher. MOVES CURSOR TO THE END OF THE JTEXTFIELD.
-                        this.jTextField_minutes.setText("5760");
-                        jTextField_minutes.setCaretPosition(jTextField_minutes.getDocument().getLength());
-                        Memory.MINUTES = 5760;
-                    }
-                    if (Integer.parseInt(jTextField_minutes.getText()) == 4654) {
-                        jLabel1_save_option.setText("Inki wasnt here...?");
-                    }
-                    Thread.sleep(100);
-                    UPDATE_USER_DATA_INFO();
-                } catch (InterruptedException | NumberFormatException e) {
-                    System.out.println("Error, letter is inside jTextField minutes. Setled to 2.");
-                    this.jTextField_minutes.setText("2");
+                Thread.sleep(70);
+                if (Integer.parseInt(jTextField_minutes.getText()) > 5760) {
+                    this.jTextField_minutes.setText("5760");
+                    jTextField_minutes.setCaretPosition(jTextField_minutes.getDocument().getLength());
+                    Memory.MINUTES = 5760;
                 }
-                break;
-            case "SAVE_INFO":
-                //deprecated option.
-                break;
+                if (Integer.parseInt(jTextField_minutes.getText()) == 4654) {
+                    jLabel1_save_option.setText("Inki wasnt here...?");
+                }
+                Thread.sleep(100);
+                UPDATE_USER_DATA_INFO();
+            } catch (InterruptedException | NumberFormatException e) {
+                System.out.println("Error, letter is inside jTextField minutes. Setled to 2.");
+                this.jTextField_minutes.setText("2");
+            }
+            break;
             default:
                 throw new AssertionError();
         }
@@ -695,6 +710,7 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
     private javax.swing.JButton jButton_START_AUTO_SAVE;
     private javax.swing.JButton jButton_open_settings;
     private javax.swing.JComboBox<String> jComboBox_save_option;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel1_save_option;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

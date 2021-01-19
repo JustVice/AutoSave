@@ -12,7 +12,7 @@ public class AutoSaveController implements Runnable {
     public AutoSaveController() {
     }
 
-    public void startWorking() {
+    public void startThread() {
         this.THREAD_ID = ((int) (Math.random() * 100000));
         Thread t = new Thread(this);
         t.start();
@@ -23,7 +23,7 @@ public class AutoSaveController implements Runnable {
         try {
             while (THREAD_ACTIVATED) {
                 SAVE_OPTION_SELECTION();
-                Run.MESSAGE_SAVED();
+                Tasks.MESSAGE_SAVED();
                 Thread.sleep(Memory.TIME_DELAY_TO_SAVE);
             }
             System.out.println("Thread " + THREAD_ID + " stopped");
@@ -262,6 +262,7 @@ public class AutoSaveController implements Runnable {
     }
 
     // </editor-fold>
+    
     public boolean isThreadActivated() {
         return THREAD_ACTIVATED;
     }
