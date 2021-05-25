@@ -150,7 +150,7 @@ public class UserDataV2 {
                 + "Please, re-open the program. The problem should be solved.\n\n"
                 + "Error 001: The data file is corrupted. The content of the data\nfile was"
                 + " edited manually. If the problem persists delete manually at: \nAppdata "
-                + "- Roaming - Just Vice - AutoSave - USER_DATA_V2.txt";
+                + "- Roaming - SPLIT VICE - AutoSave - USER_DATA_V2.txt";
         Tasks.message(message, "ERROR 001", "Error");
         DELETE_USER_DATA_FILE();
         System.exit(0);

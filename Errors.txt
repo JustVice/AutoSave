@@ -1,1 +1,1 @@
-Error 001: The data file is corrupted. The content of the data file was edited. If the problem persists delete manually at Appdata - Roaming - Just Vice - AutoSave - USER_DATA_V2.txt
+Error 001: The data file is corrupted. The content of the data file was edited. If the problem persists delete manually at Appdata - Roaming - SPLIT VICE - AutoSave - USER_DATA_V2.txt

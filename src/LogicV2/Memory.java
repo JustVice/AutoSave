@@ -9,14 +9,14 @@ public class Memory {
     // Data file name
     public static String dataFileName = "USER_DATA_V2.txt";
     //Program title. Version.
-    public static String title = "AutoSave", version = "1.3.2";
+    public static String title = "AutoSave", version = "1.3.3";
     //Folder where the data txt file will be saved.
     public static String folderForDataName = "AutoSave";
-    //Global Just Vice's data folder name.
-    public static String globalFolderForData = "Just Vice";
+    //Global data folder name.
+    public static String globalFolderForData = "SPLIT VICE";
     //Path to data folder onto Appdata - Roaming + globalFolderForData + folderForDataName
     public static String DataFolderPath = System.getenv("APPDATA") + "\\" + globalFolderForData + "\\" + folderForDataName;
-    //Global Just Vice's data folder path
+    //Global data folder path
     public static String globalFolderForDataPath = System.getenv("APPDATA") + "\\" + globalFolderForData;
     //Path to the .txt file that has the program user data stored.
     public static String DataPath = System.getenv("APPDATA") + "\\" + globalFolderForData + "\\" + folderForDataName + "\\" + dataFileName;

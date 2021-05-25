@@ -26,7 +26,7 @@ public class Tasks {
 
     public static void console_launch_personalized_message() {
         System.out.println("/////////////////////////");
-        String message = "-.AUTOSAVE BY JUST VICE.-";
+        String message = "-.AUTOSAVE BY SPLIT VICE.-";
         System.out.println(message);
         System.out.println("/////////////////////////");
     }

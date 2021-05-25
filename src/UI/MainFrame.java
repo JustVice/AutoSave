@@ -88,10 +88,6 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
         jButton_open_settings = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        jPanel6 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         twitter = new javax.swing.JLabel();
@@ -100,6 +96,7 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
         Github = new javax.swing.JLabel();
         jlabe_autosave_page = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel_vice_logo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -246,39 +243,6 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
 
         jTabbedPane1.addTab("Main", jPanel1);
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/jv_about_img.png"))); // NOI18N
-        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel3MouseClicked(evt);
-            }
-        });
-
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/jv name.png"))); // NOI18N
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel4.setText("Made by:");
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel5))
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        );
-
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel6.setText("Links:");
 
@@ -318,7 +282,7 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
             }
         });
 
-        jLabel1.setText("©MIT License - JUSTVICE");
+        jLabel1.setText("©MIT License - SPLIT VICE");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -362,22 +326,32 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
                 .addComponent(jLabel1))
         );
 
+        jLabel_vice_logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/jv_about_img_100.png"))); // NOI18N
+        jLabel_vice_logo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel_vice_logoMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(jLabel_vice_logo)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jLabel_vice_logo, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -394,8 +368,8 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("About", jPanel2);
@@ -504,19 +478,19 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
     }//GEN-LAST:event_jRadioButton_show_saved_alertActionPerformed
 
     private void twitterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_twitterMouseClicked
-        Tasks.open_link("https://justvice.github.io/s/twitter");
+        Tasks.open_link("http://split-vice.com/s/twitter");
     }//GEN-LAST:event_twitterMouseClicked
 
     private void GithubMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GithubMouseClicked
-        Tasks.open_link("https://github.com/justvice/autosave");
+        Tasks.open_link("https://github.com/splitvice/autosave");
     }//GEN-LAST:event_GithubMouseClicked
 
     private void jLabel_vice_pageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_vice_pageMouseClicked
-        Tasks.open_link("https://justvice.github.io/");
+        Tasks.open_link("http://split-vice.com/");
     }//GEN-LAST:event_jLabel_vice_pageMouseClicked
 
     private void jlabe_autosave_pageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlabe_autosave_pageMouseClicked
-        Tasks.open_link("https://justvice.github.io/technology/java/auto-save/");
+        Tasks.open_link("http://split-vice.com/technology/java/auto-save/");
     }//GEN-LAST:event_jlabe_autosave_pageMouseClicked
 
     private void jTextField_secondsKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_secondsKeyTyped
@@ -573,13 +547,13 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
         JCOMBOBOX_SAVE_DATA_CONTROLLER();
     }//GEN-LAST:event_jComboBox_save_optionItemStateChanged
     private int cont = 0;
-    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+    private void jLabel_vice_logoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_vice_logoMouseClicked
         this.cont++;
         if (cont >= 2) {
             Tasks.open_link("https://dl.dropboxusercontent.com/s/utdn6wsv5m9925x/room.png?dl=0");
             this.cont = 0;
         }
-    }//GEN-LAST:event_jLabel3MouseClicked
+    }//GEN-LAST:event_jLabel_vice_logoMouseClicked
 
     private void jButton_open_settingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_open_settingsActionPerformed
         if (!this.IS_AUTO_SAVE_WORKING) {
@@ -714,19 +688,16 @@ public class MainFrame extends javax.swing.JFrame implements Runnable {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel1_save_option;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel_title;
+    private javax.swing.JLabel jLabel_vice_logo;
     private javax.swing.JLabel jLabel_vice_page;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JRadioButton jRadioButton_show_saved_alert;
     private javax.swing.JTabbedPane jTabbedPane1;
